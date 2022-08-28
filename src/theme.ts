@@ -3,6 +3,7 @@ import { DefaultTheme } from "styled-components";
 export const lightTheme: DefaultTheme = {
   backgroundColor: "#FFFFFF",
   textColor: "#333333",
+  textColor2: "#868686",
   headerHoverColor: "#FFFFFF",
 };
 

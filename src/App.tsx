@@ -1,6 +1,7 @@
 import { ThemeProvider, createGlobalStyle } from "styled-components";
 import Router from "./Router";
 import { lightTheme } from "./theme";
+import { HelmetProvider } from "react-helmet-async";
 
 const GlobalStyle = createGlobalStyle`
   @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&family=Source+Sans+Pro:wght@300;400&display=swap');
@@ -64,7 +65,9 @@ function App() {
     <>
       <ThemeProvider theme={lightTheme}>
         <GlobalStyle />
-        <Router />
+        <HelmetProvider>
+          <Router />
+        </HelmetProvider>
       </ThemeProvider>
     </>
   );

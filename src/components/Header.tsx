@@ -33,7 +33,7 @@ const SubMenu = styled.ul`
     text-align: center;
     a {
       width: 100%;
-      padding: 5px;
+      padding: 10px;
     }
   }
   margin-bottom: 20px;
@@ -53,6 +53,7 @@ const HeaderBox = styled.header`
   min-height: 80px;
   background-color: ${(props) => props.theme.backgroundColor};
   color: ${(props) => props.theme.textColor};
+  font-size: 14px;
   text-transform: uppercase;
   position: fixed;
   top: 0;
