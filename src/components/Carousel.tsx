@@ -3,7 +3,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { useEffect } from "react";
+import { IItem } from "../atoms";
 
 interface ISlider {
   settings: ISettings;
@@ -35,11 +35,6 @@ interface ISettings {
   loop?: boolean;
 }
 
-interface IItem {
-  name: string;
-  price: number;
-}
-
 const Item = styled.div`
   padding: 0 5%;
   img {
@@ -54,21 +49,20 @@ const Item = styled.div`
   }
 `;
 
-// const Carousel = ({ settings, items }: any) => {
 const Carousel = ({ settings, items }: ISlider) => {
   return (
     <Slider {...settings}>
       {items.map((item: IItem, idx: number) => (
         <Item key={idx}>
           <Link to={"/"}>
-            <img src="./test.jpg" alt="" />
+            <img src={item.imgURL} alt="" />
           </Link>
           <div className="itemName">
             <Link to={"/"}>
               <span>{item.name}</span>
             </Link>
           </div>
-          <span className="itemPrice">KRW 35,000</span>
+          <span className="itemPrice">KRW {item.price}</span>
         </Item>
       ))}
     </Slider>

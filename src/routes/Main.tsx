@@ -1,6 +1,7 @@
 import Header from "../components/Header";
 import { Helmet } from "react-helmet-async";
 import NewItem from "../components/NewItem";
+import Best from "../components/Best";
 
 function Main() {
   return (
@@ -11,6 +12,7 @@ function Main() {
       <Header />
 
       <NewItem />
+      <Best />
     </>
   );
 }
