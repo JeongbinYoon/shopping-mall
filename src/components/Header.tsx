@@ -67,6 +67,7 @@ const HeaderBox = styled.header`
       display: flex;
     }
   }
+  z-index: 100;
 `;
 
 function Header() {
