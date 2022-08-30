@@ -63,13 +63,12 @@ const SameDayIcon = styled(Icon)`
 
 function Best() {
   const bestItem = useRecoilValue(bestItemState);
-  console.log(bestItem);
   return (
     <>
       <Title>#best item</Title>
       <Container>
-        {bestItem.map((item) => (
-          <Item>
+        {bestItem.map((item, idx) => (
+          <Item key={idx}>
             <Link to={"/"}>
               <img src={item.imgURL} alt="" />
             </Link>

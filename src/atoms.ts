@@ -215,3 +215,97 @@ export const bestItemState = atom<IItem[]>({
     },
   ],
 });
+
+export const discountItemState = atom<IItem[]>({
+  key: "discountItem",
+  default: [
+    {
+      imgURL: "https://maninstore.co.kr/web/upload/brushlab_new/img/11u.jpg",
+      name: "할인 아이템1",
+      price: 25000,
+      isBest: true,
+      isSameDay: true,
+    },
+    {
+      imgURL: "https://maninstore.co.kr/web/upload/brushlab_new/img/22u.jpg",
+      name: "할인 아이템1",
+      price: 25000,
+      isBest: true,
+      isSameDay: false,
+    },
+    {
+      imgURL: "https://maninstore.co.kr/web/upload/brushlab_new/img/zkfk1.jpg",
+      name: "할인 아이템2",
+      price: 25000,
+      isBest: true,
+      isSameDay: true,
+    },
+    {
+      imgURL: "https://maninstore.co.kr/web/upload/brushlab_new/img/zkfk2.jpg",
+      name: "할인 아이템2",
+      price: 25000,
+      isBest: true,
+      isSameDay: false,
+    },
+    {
+      imgURL:
+        "https://maninstore.co.kr/web/upload/brushlab_new/img/shirtsss.jpg",
+      name: "할인 아이템3",
+      price: 25000,
+      isBest: true,
+      isSameDay: true,
+    },
+    {
+      imgURL:
+        "https://maninstore.co.kr/web/upload/brushlab_new/img/shirtssss.jpg",
+      name: "할인 아이템3",
+      price: 25000,
+      isBest: true,
+      isSameDay: false,
+    },
+    {
+      imgURL: "https://maninstore.co.kr/web/upload/brushlab_new/img/xmdla1.jpg",
+      name: "할인 아이템4",
+      price: 25000,
+      isBest: true,
+      isSameDay: true,
+    },
+    {
+      imgURL: "https://maninstore.co.kr/web/upload/brushlab_new/img/xmdla2.jpg",
+      name: "할인 아이템4",
+      price: 25000,
+      isBest: true,
+      isSameDay: false,
+    },
+    {
+      imgURL:
+        "https://maninstore.co.kr/web/upload/brushlab_new/img/wpsxmf1.jpg",
+      name: "할인 아이템5",
+      price: 25000,
+      isBest: true,
+      isSameDay: false,
+    },
+    {
+      imgURL:
+        "https://maninstore.co.kr/web/upload/brushlab_new/img/wpsxmf3-1.jpg",
+      name: "할인 아이템5",
+      price: 25000,
+      isBest: true,
+      isSameDay: true,
+    },
+    {
+      imgURL: "https://maninstore.co.kr/web/upload/brushlab_new/img/vest1.jpg",
+      name: "할인 아이템6",
+      price: 25000,
+      isBest: true,
+      isSameDay: true,
+    },
+    {
+      imgURL: "https://maninstore.co.kr/web/upload/brushlab_new/img/vest2.jpg",
+      name: "할인 아이템6",
+      price: 25000,
+      isBest: true,
+      isSameDay: false,
+    },
+  ],
+});

@@ -60,6 +60,7 @@ const HeaderBox = styled.header`
   left: 50%;
   transform: translateX(-50%);
   transition: 0.2s;
+  backdrop-filter: blur(5px);
   &:hover {
     color: ${(props) => props.theme.headerHoverColor};
     background-color: rgba(0, 0, 0, 0.5);
