@@ -78,17 +78,7 @@ function Header() {
         <Menus>
           <Menu>
             <span>
-              <Link to="/">summer sale</Link>
-            </span>
-          </Menu>
-          <Menu>
-            <span>
-              <Link to="/big-size">big size!</Link>
-            </span>
-          </Menu>
-          <Menu>
-            <span>
-              <Link to="/new">new 7% DC</Link>
+              <Link to="/new">discount</Link>
             </span>
           </Menu>
           <Menu>
@@ -96,23 +86,7 @@ function Header() {
               <Link to="/best">best</Link>
             </span>
           </Menu>
-          <Menu>
-            <span>
-              <Link to="/made">made</Link>
-            </span>
 
-            <SubMenu>
-              <li>
-                <Link to="/made/basic">basic</Link>
-              </li>
-              <li>
-                <Link to="/made/air">air</Link>
-              </li>
-              <li>
-                <Link to="/made/black">black</Link>
-              </li>
-            </SubMenu>
-          </Menu>
           <Menu>
             <span>
               <Link to="/special">special</Link>
@@ -121,6 +95,9 @@ function Header() {
             <SubMenu>
               <li>
                 <Link to="/made/basic">1+1</Link>
+              </li>
+              <li>
+                <Link to="/made/basic">당일발송</Link>
               </li>
               <li>
                 <Link to="/made/air">cody set</Link>
@@ -163,22 +140,10 @@ function Header() {
 
             <SubMenu>
               <li>
-                <Link to="/made/basic">당일발송</Link>
-              </li>
-              <li>
-                <Link to="/made/air">입고지연</Link>
-              </li>
-              <li>
                 <Link to="/made/black">notice</Link>
               </li>
               <li>
                 <Link to="/made/black">리뷰</Link>
-              </li>
-              <li>
-                <Link to="/made/black">멤버십</Link>
-              </li>
-              <li>
-                <Link to="/made/black">채용공고</Link>
               </li>
             </SubMenu>
           </Menu>

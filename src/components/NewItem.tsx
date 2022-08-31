@@ -3,7 +3,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Carousel from "./Carousel";
 import { useRecoilValue } from "recoil";
-import { itemState } from "../atoms";
+import { newItemState } from "../atoms";
 
 const Container = styled.div`
   width: 85%;
@@ -22,7 +22,7 @@ const Title = styled.h2`
 
 function NewItem() {
   // 슬라이더 아이템
-  const items = useRecoilValue(itemState);
+  const items = useRecoilValue(newItemState);
 
   // 슬라이더 옵션
   const settings = {

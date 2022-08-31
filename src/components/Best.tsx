@@ -81,8 +81,12 @@ function Best() {
               <span className="itemPrice">KRW 55,000</span>
 
               <div className="icons">
-                {item.isBest ? <BestIcon>BEST</BestIcon> : null}
-                {item.isSameDay ? <SameDayIcon>당일발송</SameDayIcon> : null}
+                {item.category.includes("BEST") ? (
+                  <BestIcon>BEST</BestIcon>
+                ) : null}
+                {item.category.includes("overnightShipping") ? (
+                  <SameDayIcon>당일발송</SameDayIcon>
+                ) : null}
               </div>
             </ItemInfo>
           </Item>
