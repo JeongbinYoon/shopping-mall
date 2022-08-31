@@ -31,7 +31,7 @@ function NewItem() {
     slidesToShow: 4,
     slidesToScroll: 1,
     swipeToSlide: true,
-    autoplay: true,
+    autoplay: false,
     autoplaySpeed: 2500,
     pauseOnHover: true,
   };
