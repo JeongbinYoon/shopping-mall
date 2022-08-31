@@ -7,7 +7,7 @@ function Router() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Main />}></Route>
-        <Route path="/product/:id" element={<Product_detail />}></Route>
+        <Route path="/product/:productId" element={<Product_detail />}></Route>
       </Routes>
     </BrowserRouter>
   );

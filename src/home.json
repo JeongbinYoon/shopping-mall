@@ -1,0 +1,54 @@
+{
+  "Items": {
+    "newItems": [
+      {
+        "imgURL": "https://maninstore.co.kr/web/product/medium/202201/b1b9535b0796569874dcf25622051c62.jpg",
+        "name": "탄탄 조거팬츠 (4Color)",
+        "price": 29900,
+        "discountRate": 30,
+        "category": ["discount", "overnightShipping"],
+        "create_date": 1661920032550,
+        "review": 100
+      },
+      {
+        "imgURL": "https://maninstore.co.kr/web/product/medium/202201/b1b9535b0796569874dcf25622051c62.jpg",
+        "name": "탄탄 조거팬츠 (4Color)",
+        "price": 29900,
+        "discountRate": 30,
+        "category": ["discount", "overnightShipping"],
+        "create_date": 1661920032550,
+        "review": 100
+      },
+      {
+        "imgURL": "https://maninstore.co.kr/web/product/medium/202201/b1b9535b0796569874dcf25622051c62.jpg",
+        "name": "탄탄 조거팬츠 (4Color)",
+        "price": 29900,
+        "discountRate": 30,
+        "category": ["discount", "overnightShipping"],
+        "create_date": 1661920032550,
+        "review": 100
+      }
+    ],
+    "bestItems": [
+      {
+        "imgURL": "https://maninstore.co.kr/web/product/medium/202201/b1b9535b0796569874dcf25622051c62.jpg",
+        "name": "탄탄 조거팬츠 (4Color)",
+        "price": 29900,
+        "discountRate": 30,
+        "category": ["shirts", "best", "overnightShipping"],
+        "create_date": 1661920032550,
+        "review": 50
+      },
+      {
+        "imgURL": "https://maninstore.co.kr/web/product/medium/202201/b1b9535b0796569874dcf25622051c62.jpg",
+        "name": "탄탄 조거팬츠 (4Color)",
+        "price": 29900,
+        "discountRate": 30,
+        "category": ["shirts", "best", "overnightShipping"],
+        "create_date": 1661920032550,
+        "review": 50
+      }
+    ],
+    "reviews": {}
+  }
+}

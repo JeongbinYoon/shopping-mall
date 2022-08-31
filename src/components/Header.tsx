@@ -71,85 +71,119 @@ const HeaderBox = styled.header`
   z-index: 100;
 `;
 
+const Account = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  position: fixed;
+  top: 20%;
+  right: 2%;
+  button {
+    width: fit-content;
+    height: 30px;
+    margin-top: 30px;
+    transform: rotate(90deg);
+    background-color: transparent;
+    text-transform: uppercase;
+    border: 0.5px solid transparent;
+    &:hover {
+      border-bottom: 0.5px solid #333;
+    }
+  }
+`;
+
 function Header() {
   return (
-    <HeaderBox>
-      <Nav>
-        <Menus>
-          <Menu>
-            <span>
-              <Link to="/new">discount</Link>
-            </span>
-          </Menu>
-          <Menu>
-            <span>
-              <Link to="/best">best</Link>
-            </span>
-          </Menu>
+    <>
+      <HeaderBox>
+        <Nav>
+          <Menus>
+            <Menu>
+              <span>
+                <Link to="/new">discount</Link>
+              </span>
+            </Menu>
+            <Menu>
+              <span>
+                <Link to="/best">best</Link>
+              </span>
+            </Menu>
 
-          <Menu>
-            <span>
-              <Link to="/special">special</Link>
-            </span>
+            <Menu>
+              <span>
+                <Link to="/special">special</Link>
+              </span>
 
-            <SubMenu>
-              <li>
-                <Link to="/made/basic">1+1</Link>
-              </li>
-              <li>
-                <Link to="/made/basic">당일발송</Link>
-              </li>
-              <li>
-                <Link to="/made/air">cody set</Link>
-              </li>
-            </SubMenu>
-          </Menu>
-          <Menu>
-            <span>
-              <Link to="/store">store</Link>
-            </span>
+              <SubMenu>
+                <li>
+                  <Link to="/made/basic">1+1</Link>
+                </li>
+                <li>
+                  <Link to="/made/basic">당일발송</Link>
+                </li>
+                <li>
+                  <Link to="/made/air">cody set</Link>
+                </li>
+              </SubMenu>
+            </Menu>
+            <Menu>
+              <span>
+                <Link to="/store">store</Link>
+              </span>
 
-            <SubMenu>
-              <li>
-                <Link to="/made/basic">outer</Link>
-              </li>
-              <li>
-                <Link to="/made/air">top</Link>
-              </li>
-              <li>
-                <Link to="/made/black">shirts</Link>
-              </li>
-              <li>
-                <Link to="/made/black">bottom</Link>
-              </li>
-              <li>
-                <Link to="/made/black">shoes</Link>
-              </li>
-              <li>
-                <Link to="/made/black">acc</Link>
-              </li>
-              <li>
-                <Link to="/made/black">premium</Link>
-              </li>
-            </SubMenu>
-          </Menu>
-          <Menu>
-            <span>
-              <Link to="/community">community</Link>
-            </span>
+              <SubMenu>
+                <li>
+                  <Link to="/made/basic">outer</Link>
+                </li>
+                <li>
+                  <Link to="/made/air">top</Link>
+                </li>
+                <li>
+                  <Link to="/made/black">shirts</Link>
+                </li>
+                <li>
+                  <Link to="/made/black">bottom</Link>
+                </li>
+                <li>
+                  <Link to="/made/black">shoes</Link>
+                </li>
+                <li>
+                  <Link to="/made/black">acc</Link>
+                </li>
+                <li>
+                  <Link to="/made/black">premium</Link>
+                </li>
+              </SubMenu>
+            </Menu>
+            <Menu>
+              <span>
+                <Link to="/community">community</Link>
+              </span>
 
-            <SubMenu>
-              <li>
-                <Link to="/made/black">notice</Link>
-              </li>
-              <li>
-                <Link to="/made/black">리뷰</Link>
-              </li>
-            </SubMenu>
-          </Menu>
-        </Menus>
-      </Nav>
-    </HeaderBox>
+              <SubMenu>
+                <li>
+                  <Link to="/made/black">notice</Link>
+                </li>
+                <li>
+                  <Link to="/made/black">리뷰</Link>
+                </li>
+              </SubMenu>
+            </Menu>
+          </Menus>
+        </Nav>
+      </HeaderBox>
+      <Account>
+        <Link to={"/"}>
+          <button className="login">login</button>
+        </Link>
+        <Link to={"/"}>
+          <button className="join">join</button>
+        </Link>
+        <Link to={"/"}>
+          <button className="myPage">my page</button>
+        </Link>
+      </Account>
+    </>
   );
 }
 

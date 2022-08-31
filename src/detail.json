@@ -1,0 +1,26 @@
+{
+  "Items": {
+    "newItems": [
+      {
+        "product_id": 1,
+        "thumbnail": "https://maninstore.co.kr/web/product/medium/202201/b1b9535b0796569874dcf25622051c62.jpg",
+        "detailImg": [
+          "https://maninstore.co.kr/web/product/medium/202201/b1b9535b0796569874dcf25622051c62.jpg",
+          "https://maninstore.co.kr/web/product/medium/202201/b1b9535b0796569874dcf25622051c62.jpg",
+          "https://maninstore.co.kr/web/product/medium/202201/b1b9535b0796569874dcf25622051c62.jpg",
+          "https://maninstore.co.kr/web/product/medium/202201/b1b9535b0796569874dcf25622051c62.jpg"
+        ],
+        "name": "탄탄 조거팬츠 (4Color)",
+        "price": 29900,
+        "discountRate": 30,
+        "color": ["블랙", "그레이", "오트밀", "화이트멜란지"],
+        "size": ["S", "M", "L", "XL", "2XL"],
+        "category": ["DISCOUNT", "overnightShipping"],
+        "summary": "기본중에 기본!\n맨인스토어 자체제작! 감탄 레이어드 분또 티셔츠!\n2만장이상의 판매량과 수많은 후기가 입증합니다!\ncheck point!\n1. 브랜드에서만 사용되는 고급 기능성 분또 원단으로 탄탄하게 착용 가능!\n2. 오랜기간 입어도 줄거나 늘어남이 없는 기능성 티!\n3. 여러번의 샘플링을 통한 핏, 늘어남 없는 라운드부분에 특별히 신경써서 제작!\n4. 단품은 물론 레이어드용으로 적당한 기장감과 트랜디한 앞뒤편차의 트임!\n5. 탄탄한 원단으로 비침이 없으며 건조기에 세탁해도 줄지않는 복원력!\n6. 브랜드 전문 공장에서 제작되어 탄탄한 봉제와 가성비 대비 높은 퀄리티!\n-\nColor - 블랙. 화이트\n-\nSize - M. L, XL\n-\n180/64 L 착용\n-\nM - 어깨 50 가슴 58.5 팔기장 62 총장 앞 67.5 / 뒤 70\nL - 어깨 53 가슴 59 팔기장 63 총장 앞 68.5 / 뒤 71\nXL - 어깨 54 가슴 62 팔기장 64 총장 앞 74 뒤 77\n-\nFabric - 폴리 70% 레이온 26% 스판 4%",
+        "stock_quantity": 25,
+        "create_date": 1661920032550
+      }
+    ],
+    "reviews": {}
+  }
+}

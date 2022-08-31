@@ -5,10 +5,12 @@ export interface IItem {
   imgURL: string;
   name: string;
   price: number;
+  discountRate?: number;
   color: string[];
   size: string[];
   category: string[];
   summary: string;
+  stock_quantity?: number;
   create_date: number;
   update_date?: number;
 }
@@ -22,9 +24,10 @@ export const newItemState = atom<IItem[]>({
         "https://maninstore.co.kr/web/product/medium/202201/b1b9535b0796569874dcf25622051c62.jpg",
       name: "탄탄 조거팬츠 (4Color)",
       price: 29900,
-      color: ["블랙", "연베이지", "연그레이", "진카키"],
+      discountRate: 30,
+      color: ["블랙", "그레이", "오트밀", "화이트멜란지"],
       size: ["S", "M", "L", "XL", "2XL"],
-      category: ["SALE"],
+      category: ["DISCOUNT"],
       summary: `
       기본중에 기본! 맨인스토어 자체제작! 감탄 레이어드 분또 티셔츠!
       2만장이상의 판매량과 수많은 후기가 입증합니다!
@@ -49,6 +52,7 @@ export const newItemState = atom<IItem[]>({
       -
       Fabric - 폴리 70% 레이온 26% 스판 4%
       `,
+      stock_quantity: 25,
       create_date: 1661920032550,
     },
     {
