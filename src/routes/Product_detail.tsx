@@ -1,23 +1,10 @@
-import { useLocation, useParams } from "react-router-dom";
+import { useEffect } from "react";
+import { Link, useLocation, useParams } from "react-router-dom";
+import { useRecoilState } from "recoil";
 import styled from "styled-components";
+import { selectColorState, selectSizeState } from "../atoms";
 import Header from "../components/Header";
 import itemData from "../detail.json";
-
-// interface RouteState {
-//   item: {
-//     product_id: number;
-//     imgURL: string;
-//     name: string;
-//     price: number;
-//     discountRate?: number;
-//     color: string[];
-//     size: string[];
-//     category: string[];
-//     summary: string;
-//     create_date: number;
-//     update_date?: number;
-//   };
-// }
 
 const Container = styled.div`
   display: flex;
@@ -64,7 +51,7 @@ const DetailArea = styled.div`
     .itemOption {
       margin-top: 30px;
       padding: 15px;
-      border: 1px solid #333;
+      border: 1px solid ${(props) => props.theme.borderColor};
       font-size: 14px;
       .itemColor {
         margin: 20px 0 10px 0;
@@ -81,6 +68,7 @@ const DetailArea = styled.div`
           margin-right: 5px;
           padding: 10px;
           border: 1px solid #ccc;
+          cursor: pointer;
         }
       }
     }
@@ -93,18 +81,29 @@ const DetailArea = styled.div`
     .itemButtons {
       display: flex;
       button {
-        background-color: transparent;
-        border: 1px solid #333;
         height: 50px;
+        margin-right: 10px;
+        background-color: transparent;
+        font-size: 18px;
+        border: 1px solid ${(props) => props.theme.borderColor};
+        cursor: pointer;
       }
       .likeBtn {
-        width: 50px;
-      }
-      .buyBtn {
-        width: 50%;
+        min-width: 50px;
+        border-radius: 50%;
       }
       .cartBtn {
         width: 50%;
+      }
+      .buyBtn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 50%;
+        margin: 0%;
+        background-color: ${(props) => props.theme.buttonColor};
+        color: ${(props) => props.theme.textColorWhite};
+        font-size: 18px;
       }
     }
   }
@@ -119,6 +118,25 @@ function Product_detail() {
   // 요청해서 받은 데이터
   const data = itemData;
   const itemDetail = data.itemDetail;
+
+  // 옵션 선택
+  const [color, setColor] = useRecoilState<any>(selectColorState);
+  const [size, setSize] = useRecoilState<any>(selectSizeState);
+  const colorClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    setColor(e.currentTarget.innerText);
+  };
+  const sizeClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    setSize(e.currentTarget.innerText);
+  };
+
+  // 옵션 모두 선택 시 아이템 생성 후 초기화
+  useEffect(() => {
+    console.log(color, size);
+    if (color && size) {
+      setColor(null);
+      setSize(null);
+    }
+  }, [color, size]);
 
   console.log(data);
   return (
@@ -150,14 +168,18 @@ function Product_detail() {
               <div className="itemColor">
                 <span>색상</span>
                 {itemDetail.color.map((color) => (
-                  <div>{color}</div>
+                  <div key={color} onClick={colorClick}>
+                    {color}
+                  </div>
                 ))}
               </div>
 
               <div className="itemSize">
                 <span>사이즈</span>
                 {itemDetail.size.map((size) => (
-                  <div>{size}</div>
+                  <div key={size} onClick={sizeClick}>
+                    {size}
+                  </div>
                 ))}
               </div>
             </div>
@@ -167,7 +189,9 @@ function Product_detail() {
             <div className="itemButtons">
               <button className="likeBtn">♡</button>
               <button className="cartBtn">장바구니</button>
-              <button className="buyBtn">구매하기</button>
+              <Link to={"/"} className="buyBtn">
+                구매하기
+              </Link>
             </div>
           </div>
         </DetailArea>

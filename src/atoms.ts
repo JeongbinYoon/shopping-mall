@@ -620,3 +620,20 @@ export const discountItemState = atom<IItem[]>({
     },
   ],
 });
+
+export interface selectOption {
+  color?: string | null;
+  size?: string | null;
+}
+export const selectColorState = atom<selectOption>({
+  key: "selectColorState",
+  default: {
+    color: null,
+  },
+});
+export const selectSizeState = atom<selectOption>({
+  key: "selectSizeState",
+  default: {
+    size: null,
+  },
+});
