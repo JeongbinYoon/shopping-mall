@@ -54,7 +54,7 @@ const Carousel = ({ settings, items }: ISlider) => {
     <Slider {...settings}>
       {items.map((item: IItem, idx: number) => (
         <Item key={idx}>
-          <Link to={`/product/${item.product_id}`} state={{ item }}>
+          <Link to={`/product/${item.product_id}`}>
             <img src={item.imgURL} alt="" />
           </Link>
           <div className="itemName">

@@ -74,20 +74,21 @@ const HeaderBox = styled.header`
 const Account = styled.div`
   display: flex;
   align-items: center;
-  flex-direction: column;
   position: fixed;
   top: 20%;
-  right: 2%;
+  left: calc(92.5% + 20px);
+  transform: rotate(90deg);
+  transform-origin: left bottom;
   button {
     width: fit-content;
     height: 30px;
-    margin-top: 30px;
-    transform: rotate(90deg);
     background-color: transparent;
+    white-space: nowrap;
     text-transform: uppercase;
     border: 0.5px solid transparent;
     &:hover {
       border-bottom: 0.5px solid #333;
+      cursor: pointer;
     }
   }
 `;
@@ -173,14 +174,14 @@ function Header() {
         </Nav>
       </HeaderBox>
       <Account>
-        <Link to={"/"}>
-          <button className="login">login</button>
+        <Link to={"/login"}>
+          <button>login</button>
         </Link>
-        <Link to={"/"}>
-          <button className="join">join</button>
+        <Link to={"/join"}>
+          <button>join</button>
         </Link>
-        <Link to={"/"}>
-          <button className="myPage">my page</button>
+        <Link to={"/mypage"}>
+          <button>my page</button>
         </Link>
       </Account>
     </>
