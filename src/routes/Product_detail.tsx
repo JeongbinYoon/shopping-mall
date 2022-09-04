@@ -1,8 +1,8 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
-import { selectColorState, selectSizeState } from "../atoms";
+import { selectColorState, selectedState, selectSizeState } from "../atoms";
 import Header from "../components/Header";
 import itemData from "../detail.json";
 
@@ -70,6 +70,12 @@ const DetailArea = styled.div`
           border: 1px solid #ccc;
           cursor: pointer;
         }
+        div:hover {
+          border: 1px solid #333;
+        }
+        div.active {
+          border: 1px solid #333;
+        }
       }
     }
     .itemTotal {
@@ -111,6 +117,7 @@ const DetailArea = styled.div`
 
 const PrdDetail = styled.div``;
 
+const selected: any = [];
 function Product_detail() {
   // 상품 번호 파라미터
   const { productId } = useParams();
@@ -123,22 +130,44 @@ function Product_detail() {
   const [color, setColor] = useRecoilState<any>(selectColorState);
   const [size, setSize] = useRecoilState<any>(selectSizeState);
   const colorClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    setColor(e.currentTarget.innerText);
+    if (color !== e.currentTarget.innerText) {
+      e.currentTarget.classList.toggle("active");
+      setColor(e.currentTarget.innerText);
+    } else setColor(null);
   };
   const sizeClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    setSize(e.currentTarget.innerText);
+    if (color === null) {
+      alert("색상을 먼저 선택해주세요.");
+    } else {
+      // if (size !== e.currentTarget.innerText) {
+      e.currentTarget.classList.toggle("active");
+      setSize(e.currentTarget.innerText);
+      // } else setSize(null);
+      // setSelected((current: any) => [...current, { color, size }]);
+    }
+
+    const colorActiveOption = document.querySelectorAll(".active");
+
+    // setColor(null);
+    // setSize(null);
+    colorActiveOption.forEach((el) => el.classList.remove("active"));
   };
 
   // 옵션 모두 선택 시 아이템 생성 후 초기화
   useEffect(() => {
-    console.log(color, size);
-    if (color && size) {
-      setColor(null);
-      setSize(null);
+    // setColor(null);
+    // setSize(null);
+  }, []);
+  useEffect(() => {
+    if (Object.values(size)[0] !== null) {
+      selected.push({ color, size });
+      // setColor(null);
+      // setSize(null);
     }
-  }, [color, size]);
+    console.log(selected);
+  }, [size]);
 
-  console.log(data);
+  // console.log(data);
   return (
     <>
       <Header />
@@ -180,6 +209,12 @@ function Product_detail() {
                   <div key={size} onClick={sizeClick}>
                     {size}
                   </div>
+                ))}
+              </div>
+
+              <div className="selected">
+                {selected.map((el: any) => (
+                  <div>{`${el.color} / ${el.size}`}</div>
                 ))}
               </div>
             </div>

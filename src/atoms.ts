@@ -637,3 +637,7 @@ export const selectSizeState = atom<selectOption>({
     size: null,
   },
 });
+export const selectedState = atom<selectOption[]>({
+  key: "selectedState",
+  default: [],
+});
