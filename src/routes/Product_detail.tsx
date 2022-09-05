@@ -2,12 +2,19 @@ import { useEffect, useRef } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
-import { selectColorState, selectedState, selectSizeState } from "../atoms";
+import {
+  ITabInfo,
+  selectColorState,
+  selectedState,
+  selectSizeState,
+  tabInfoState,
+} from "../atoms";
 import Header from "../components/Header";
 import itemData from "../detail.json";
 
 const Container = styled.div`
   display: flex;
+  flex-direction: column;
   width: 85%;
   margin: 0 auto;
   margin-top: 150px;
@@ -17,6 +24,7 @@ const Container = styled.div`
 const DetailArea = styled.div`
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
   width: 100%;
   .imgBox {
     width: 600px;
@@ -24,7 +32,7 @@ const DetailArea = styled.div`
     margin-right: 5%;
     overflow: hidden;
     img {
-      width: 100%;
+      /* width: 100%; */
     }
   }
   .itemInfo {
@@ -117,6 +125,38 @@ const DetailArea = styled.div`
 
 const PrdDetail = styled.div``;
 
+const PrdTab = styled.ul`
+  display: flex;
+  height: 50px;
+  border-bottom: 1px solid #ccc;
+  margin: 50px 0;
+  li {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 25%;
+    color: ${(props) => props.theme.textColor2};
+    cursor: pointer;
+  }
+  li.active {
+    color: ${(props) => props.theme.textColor};
+    border-bottom: 1px solid ${(props) => props.theme.textColor};
+  }
+`;
+
+const PrdInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  img {
+    width: 80%;
+    margin-bottom: 20px;
+  }
+`;
+const Review = styled.div``;
+const QnA = styled.div``;
+const SellerInfo = styled.div``;
+
 const selected: any = [];
 function Product_detail() {
   // 상품 번호 파라미터
@@ -127,45 +167,16 @@ function Product_detail() {
   const itemDetail = data.itemDetail;
 
   // 옵션 선택
-  const [color, setColor] = useRecoilState<any>(selectColorState);
-  const [size, setSize] = useRecoilState<any>(selectSizeState);
-  const colorClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (color !== e.currentTarget.innerText) {
-      e.currentTarget.classList.toggle("active");
-      setColor(e.currentTarget.innerText);
-    } else setColor(null);
+
+  // 상세정보 탭
+  const [tabInfo, setTabInfo] = useRecoilState<ITabInfo>(tabInfoState);
+  const tabClick = (e: React.MouseEvent<HTMLLIElement>) => {
+    const tab = e.target as HTMLLIElement;
+    setTabInfo({ tab: tab.innerText });
+    const tabs = tab.parentNode?.childNodes;
+    [...(tabs as any)]?.map((tab) => tab.classList.remove("active"));
+    tab.classList.add("active");
   };
-  const sizeClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (color === null) {
-      alert("색상을 먼저 선택해주세요.");
-    } else {
-      // if (size !== e.currentTarget.innerText) {
-      e.currentTarget.classList.toggle("active");
-      setSize(e.currentTarget.innerText);
-      // } else setSize(null);
-      // setSelected((current: any) => [...current, { color, size }]);
-    }
-
-    const colorActiveOption = document.querySelectorAll(".active");
-
-    // setColor(null);
-    // setSize(null);
-    colorActiveOption.forEach((el) => el.classList.remove("active"));
-  };
-
-  // 옵션 모두 선택 시 아이템 생성 후 초기화
-  useEffect(() => {
-    // setColor(null);
-    // setSize(null);
-  }, []);
-  useEffect(() => {
-    if (Object.values(size)[0] !== null) {
-      selected.push({ color, size });
-      // setColor(null);
-      // setSize(null);
-    }
-    console.log(selected);
-  }, [size]);
 
   // console.log(data);
   return (
@@ -197,18 +208,14 @@ function Product_detail() {
               <div className="itemColor">
                 <span>색상</span>
                 {itemDetail.color.map((color) => (
-                  <div key={color} onClick={colorClick}>
-                    {color}
-                  </div>
+                  <div key={color}>{color}</div>
                 ))}
               </div>
 
               <div className="itemSize">
                 <span>사이즈</span>
                 {itemDetail.size.map((size) => (
-                  <div key={size} onClick={sizeClick}>
-                    {size}
-                  </div>
+                  <div key={size}>{size}</div>
                 ))}
               </div>
 
@@ -230,7 +237,32 @@ function Product_detail() {
             </div>
           </div>
         </DetailArea>
-        <PrdDetail></PrdDetail>
+        <PrdDetail>
+          <PrdTab>
+            <li onClick={tabClick} className="prdInfo active">
+              상세정보
+            </li>
+            <li onClick={tabClick} className="review ">
+              리뷰
+            </li>
+            <li onClick={tabClick} className="qna ">
+              상품 Q&amp;A
+            </li>
+            <li onClick={tabClick} className="sellerInfo ">
+              판매자정보
+            </li>
+          </PrdTab>
+          {tabInfo.tab === "상세정보" && (
+            <PrdInfo>
+              {itemDetail.detailImg.map((url) => (
+                <img src={url} alt="상세이미지" />
+              ))}
+            </PrdInfo>
+          )}
+          {tabInfo.tab === "리뷰" && <Review>리뷰</Review>}
+          {tabInfo.tab === "상품 Q&A" && <QnA>상품 QA</QnA>}
+          {tabInfo.tab === "판매자정보" && <SellerInfo>판매자정보</SellerInfo>}
+        </PrdDetail>
       </Container>
     </>
   );

@@ -641,3 +641,14 @@ export const selectedState = atom<selectOption[]>({
   key: "selectedState",
   default: [],
 });
+
+// 상세정보 탭
+export interface ITabInfo {
+  tab: string;
+}
+export const tabInfoState = atom<ITabInfo>({
+  key: "tabInfo",
+  default: {
+    tab: "상세정보",
+  },
+});
