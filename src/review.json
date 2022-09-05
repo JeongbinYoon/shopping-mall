@@ -1,0 +1,42 @@
+{
+  "reviews": [
+    {
+      "reviewId": 1,
+      "rate": 5,
+      "option": { "size": "S", "color": "그레이" },
+      "height": 168,
+      "weight": 64,
+      "create_date": 1661520032550,
+      "content": "와우~~보들보들 하구요 촉감이너무 좋네요~ 시원해요~~ 추천~!!!",
+      "photos": [
+        "https://img.nstationmall.com/mall//photo-review/201806/3951/1.jpg?updated=1650680883",
+        "https://img.nstationmall.com/mall//photo-review/109930/2969/1.jpg?updated=1648034627"
+      ],
+      "userId": "dlraud"
+    },
+    {
+      "reviewId": 2,
+      "rate": 4,
+      "option": { "size": "M", "color": "블랙" },
+      "height": 175,
+      "weight": 70,
+      "create_date": 1661920032550,
+      "content": "봄에 입기엔 좀 얇네요 디자인 넘 이쁘구 색상도 사진그대로 정사이즈 신랑이 맘에 들어하네요\n잘 입을게요",
+      "photos": null,
+      "userId": "abcg214"
+    },
+    {
+      "reviewId": 3,
+      "rate": 3.5,
+      "option": { "size": "XL", "color": "화이트멜란지" },
+      "height": 180,
+      "weight": 88,
+      "create_date": 1662345382800,
+      "content": "평범해요",
+      "photos": [
+        "https://img.nstationmall.com/mall//photo-review/109930/2969/1.jpg?updated=1648034627"
+      ],
+      "userId": "jebong"
+    }
+  ]
+}

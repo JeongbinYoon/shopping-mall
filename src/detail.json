@@ -18,45 +18,5 @@
     "summary": "기본중에 기본!\n맨인스토어 자체제작! 감탄 레이어드 분또 티셔츠!\n2만장이상의 판매량과 수많은 후기가 입증합니다!\ncheck point!\n1. 브랜드에서만 사용되는 고급 기능성 분또 원단으로 탄탄하게 착용 가능!\n2. 오랜기간 입어도 줄거나 늘어남이 없는 기능성 티!\n3. 여러번의 샘플링을 통한 핏, 늘어남 없는 라운드부분에 특별히 신경써서 제작!\n4. 단품은 물론 레이어드용으로 적당한 기장감과 트랜디한 앞뒤편차의 트임!\n5. 탄탄한 원단으로 비침이 없으며 건조기에 세탁해도 줄지않는 복원력!\n6. 브랜드 전문 공장에서 제작되어 탄탄한 봉제와 가성비 대비 높은 퀄리티!\n-\nColor - 블랙. 화이트\n-\nSize - M. L, XL\n-\n180/64 L 착용\n-\nM - 어깨 50 가슴 58.5 팔기장 62 총장 앞 67.5 / 뒤 70\nL - 어깨 53 가슴 59 팔기장 63 총장 앞 68.5 / 뒤 71\nXL - 어깨 54 가슴 62 팔기장 64 총장 앞 74 뒤 77\n-\nFabric - 폴리 70% 레이온 26% 스판 4%",
     "stock_quantity": 25,
     "create_date": 1661920032550
-  },
-  "reviews": [
-    {
-      "reviewId": 1,
-      "rate": 5,
-      "option": { "size": "S", "color": "그레이" },
-      "height": 168,
-      "weight": 64,
-      "create_date": 1661520032550,
-      "content": "와우~~보들보들 하구요 촉감이너무 좋네요~ 시원해요~~ 추천~!!!",
-      "photos": [
-        "https://img.nstationmall.com/mall//photo-review/201806/3951/1.jpg?updated=1650680883",
-        "https://img.nstationmall.com/mall//photo-review/109930/2969/1.jpg?updated=1648034627"
-      ],
-      "userId": "dlraud"
-    },
-    {
-      "reviewId": 2,
-      "rate": 4,
-      "option": { "size": "M", "color": "블랙" },
-      "height": 175,
-      "weight": 70,
-      "create_date": 1661920032550,
-      "content": "봄에 입기엔 좀 얇네요 디자인 넘 이쁘구 색상도 사진그대로 정사이즈 신랑이 맘에 들어하네요\n잘 입을게요",
-      "photos": null,
-      "userId": "abcg214"
-    },
-    {
-      "reviewId": 3,
-      "rate": 3.5,
-      "option": { "size": "XL", "color": "화이트멜란지" },
-      "height": 180,
-      "weight": 88,
-      "create_date": 1662345382800,
-      "content": "평범해요",
-      "photos": [
-        "https://img.nstationmall.com/mall//photo-review/109930/2969/1.jpg?updated=1648034627"
-      ],
-      "userId": "jebong"
-    }
-  ]
+  }
 }

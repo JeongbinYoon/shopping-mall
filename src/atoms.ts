@@ -652,3 +652,21 @@ export const tabInfoState = atom<ITabInfo>({
     tab: "상세정보",
   },
 });
+
+export interface IReview {
+  reviewId: number;
+  rate: number;
+  option: { size: string; color: string };
+  height: number;
+  weight: number;
+  create_date: number;
+  content: string;
+  photos: string[] | null;
+  userId: string;
+}
+
+// 리뷰
+export const reviewState = atom<IReview[]>({
+  key: "review",
+  default: [],
+});
