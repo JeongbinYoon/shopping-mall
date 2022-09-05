@@ -637,9 +637,14 @@ export const selectSizeState = atom<selectOption>({
     size: null,
   },
 });
-export const selectedState = atom<selectOption[]>({
-  key: "selectedState",
-  default: [],
+export const selectedItemState = atom<selectOption[]>({
+  key: "selectedItemState",
+  default: [
+    {
+      color: null,
+      size: null,
+    },
+  ],
 });
 
 // 상세정보 탭

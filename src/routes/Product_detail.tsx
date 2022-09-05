@@ -1,14 +1,16 @@
 import { useEffect, useRef } from "react";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import styled from "styled-components";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import {
   IReview,
   ITabInfo,
   reviewState,
   selectColorState,
-  selectedState,
-  selectSizeState,
+  selectedItemState,
+  selectOption,
   tabInfoState,
 } from "../atoms";
 import Header from "../components/Header";
@@ -94,22 +96,55 @@ const DetailArea = styled.div`
         div {
           margin-right: 5px;
           padding: 10px;
-          border: 1px solid #ccc;
+          border: 1px solid ${(props) => props.theme.borderColor};
           cursor: pointer;
         }
         div:hover {
-          border: 1px solid #333;
+          border: 1px solid ${(props) => props.theme.borderDarkColor};
         }
         div.active {
-          border: 1px solid #333;
+          border: 1px solid ${(props) => props.theme.borderDarkColor};
         }
+      }
+    }
+    .selected {
+      margin-top: 15px;
+      background-color: #fafafa;
+      border: 1px solid ${(props) => props.theme.borderColor};
+      padding: 0 15px;
+      color: ${(props) => props.theme.textColor};
+      > div {
+        display: flex;
+        margin: 20px 0;
+      }
+      .priceAndBtn {
+        margin-left: auto;
+        .price {
+          font-size: 18px;
+          font-weight: 700;
+        }
+      }
+      .minusBtn {
+        margin-left: 15px;
+        background-color: transparent;
+        color: ${(props) => props.theme.textColor2};
+        border: none;
+        cursor: pointer;
       }
     }
     .itemTotal {
       margin: 20px 0;
       text-transform: uppercase;
-      font-size: 20px;
+      font-size: 16px;
       text-align: right;
+      .priceResult {
+        color: #f86364;
+        font-size: 28px;
+        font-weight: 700;
+      }
+      .KRW {
+        font-size: 16px;
+      }
     }
     .itemButtons {
       display: flex;
@@ -178,7 +213,6 @@ const PrdInfo = styled.div`
 const QnA = styled.div``;
 const SellerInfo = styled.div``;
 
-const selected: any = [];
 function Product_detail() {
   // 상품 번호 파라미터
   const { productId } = useParams();
@@ -193,6 +227,62 @@ function Product_detail() {
   }, []);
 
   // 옵션 선택
+  const [selectedColor, setSelectedColor] =
+    useRecoilState<selectOption>(selectColorState);
+  const [selectedItem, setSelectedItem] =
+    useRecoilState<selectOption[]>(selectedItemState);
+
+  const colorClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    const target = e.target as HTMLElement;
+    setSelectedColor({
+      color: target.innerText,
+    });
+    const siblings = target.parentNode?.childNodes;
+    [...(siblings as any)].map((el) => el.classList.remove("active"));
+    target.classList.add("active");
+  };
+
+  const itemColorOption = useRef<any>();
+  const sizeClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    const target = e.target as HTMLElement;
+    if (selectedColor.color === null) {
+      alert("색상을 먼저 선택해주세요.");
+    } else {
+      setSelectedItem((current: any) => [
+        ...current,
+        { color: selectedColor.color, size: target.innerText },
+      ]);
+      setSelectedColor({ color: null });
+      [...itemColorOption.current.childNodes].map((el: any) =>
+        el.classList.remove("active")
+      );
+    }
+  };
+
+  // 옵션 삭제
+  const deleteOption = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const target = e.target as HTMLElement;
+    // target?.parentNode?.parentNode.removeChild;
+    const targetIndex = Number(target.parentElement?.dataset.idx);
+    const newArr = [...selectedItem].filter(
+      (el: selectOption) => el.size !== null
+    );
+    newArr.splice(targetIndex, 1);
+    setSelectedItem(newArr);
+  };
+
+  // 선택한 옵션처리
+  useEffect(() => {
+    console.log(selectedItem);
+  }, [selectedItem]);
+
+  // 장바구니 담기
+  const addCart = () => {
+    // 장바구니에 담을 최종 배열
+    const selectedPrd = selectedItem.filter(
+      (el: selectOption) => el.size !== null
+    );
+  };
 
   // 상세정보 탭
   const [tabInfo, setTabInfo] = useRecoilState<ITabInfo>(tabInfoState);
@@ -218,44 +308,107 @@ function Product_detail() {
               <span className="Price">
                 KRW {itemDetail.price.toLocaleString()}
               </span>
-              <span className="dcPrice">
-                KRW{" "}
-                {(
-                  itemDetail.price -
-                  Math.floor((itemDetail.price * itemDetail.discountRate) / 100)
-                ).toLocaleString()}
-              </span>
+              {itemDetail.discountRate ? (
+                <span className="dcPrice">
+                  KRW{" "}
+                  {(
+                    itemDetail.price -
+                    Math.floor(
+                      (itemDetail.price * itemDetail.discountRate) / 100
+                    )
+                  ).toLocaleString()}
+                </span>
+              ) : null}
             </div>
             <pre className="itemSummary">{itemDetail.summary}</pre>
 
+            {/* 옵션 */}
             <div className="itemOption">
               <span>옵션</span>
-              <div className="itemColor">
+              <div ref={itemColorOption} className="itemColor">
                 <span>색상</span>
                 {itemDetail.color.map((color) => (
-                  <div key={color}>{color}</div>
+                  <div onClick={colorClick} key={color}>
+                    {color}
+                  </div>
                 ))}
               </div>
 
               <div className="itemSize">
                 <span>사이즈</span>
                 {itemDetail.size.map((size) => (
-                  <div key={size}>{size}</div>
+                  <div onClick={sizeClick} key={size}>
+                    {size}
+                  </div>
                 ))}
               </div>
 
-              <div className="selected">
-                {selected.map((el: any) => (
-                  <div>{`${el.color} / ${el.size}`}</div>
-                ))}
-              </div>
+              {/* 추가한 옵션 */}
+              {selectedItem.filter((el: selectOption) => el.size !== null)
+                .length > 0 ? (
+                <div className="selected">
+                  {selectedItem
+                    .filter((el: selectOption) => el.size !== null)
+                    .map((el, idx) => (
+                      <div key={idx} data-idx={idx}>
+                        <span>{`${el.color} / ${el.size}`}</span>
+                        <div className="priceAndBtn">
+                          {itemDetail.discountRate ? (
+                            <span className="price">
+                              {(
+                                itemDetail.price -
+                                Math.floor(
+                                  (itemDetail.price * itemDetail.discountRate) /
+                                    100
+                                )
+                              ).toLocaleString()}
+                            </span>
+                          ) : (
+                            <span>{itemDetail.price}</span>
+                          )}
+                          <button className="minusBtn" onClick={deleteOption}>
+                            <FontAwesomeIcon icon={faCircleXmark} />
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                </div>
+              ) : null}
             </div>
 
-            <div className="itemTotal">total: 0 (0개)</div>
+            <div className="itemTotal">
+              total:{" "}
+              <span className="priceResult">
+                {itemDetail.discountRate
+                  ? (
+                      selectedItem.filter(
+                        (el: selectOption) => el.size !== null
+                      ).length *
+                      (itemDetail.price -
+                        Math.floor(
+                          (itemDetail.price * itemDetail.discountRate) / 100
+                        ))
+                    ).toLocaleString()
+                  : (
+                      selectedItem.filter(
+                        (el: selectOption) => el.size !== null
+                      ).length * itemDetail.price
+                    ).toLocaleString()}
+                <span className="KRW">원</span>{" "}
+              </span>
+              (
+              {
+                selectedItem.filter((el: selectOption) => el.size !== null)
+                  .length
+              }
+              개)
+            </div>
 
             <div className="itemButtons">
               <button className="likeBtn">♡</button>
-              <button className="cartBtn">장바구니</button>
+              <button onClick={addCart} className="cartBtn">
+                장바구니
+              </button>
               <Link to={"/"} className="buyBtn">
                 구매하기
               </Link>
