@@ -1,5 +1,14 @@
 import { DefaultTheme } from "styled-components";
 
+const size = {
+  mobile: "770px",
+  tabletS: "1023px",
+  tabletM: "1220px",
+  tabletL: "1280px",
+  labtop: "1460px",
+  dekstop: "1700px",
+};
+
 export const lightTheme: DefaultTheme = {
   backgroundColor: "#FFFFFF",
   textColor: "#333333",
@@ -8,6 +17,12 @@ export const lightTheme: DefaultTheme = {
   headerHoverColor: "#FFFFFF",
   buttonColor: "#777777",
   borderColor: "#777777",
+  mobile: `(max-width:${size.mobile})`,
+  tabletS: `(max-width:${size.tabletS})`,
+  tabletM: `(max-width:${size.tabletM})`,
+  tabletL: `(max-width:${size.tabletL})`,
+  labtop: `(max-width:${size.labtop})`,
+  dekstop: `(max-width:${size.dekstop})`,
 };
 
 export const darkTheme: DefaultTheme = {
