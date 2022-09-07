@@ -9,9 +9,13 @@ const Container = styled.div`
   max-width: 460px;
   margin: 0 auto;
   margin-top: 110px;
-  p {
-    margin-bottom: 10px;
-  }
+`;
+
+const Title = styled.h2`
+  margin-bottom: 30px;
+  text-align: center;
+  font-size: 24px;
+  font-weight: 700;
 `;
 
 const Form = styled.form`
@@ -28,6 +32,7 @@ const Form = styled.form`
     height: 50px;
     margin-top: 20px;
     color: #fff;
+    font-size: 18px;
     background-color: #186a9c;
     border: none;
   }
@@ -35,6 +40,10 @@ const Form = styled.form`
 
 const Input = styled.input`
   height: 50px;
+  margin-top: 10px;
+  padding-left: 15px;
+  border: 1px solid ${(props) => props.theme.borderColor};
+  border-radius: 3px;
 `;
 
 const Area = styled.div`
@@ -44,16 +53,11 @@ const Area = styled.div`
   label {
     font-weight: 700;
   }
-  input {
-    margin-top: 10px;
-    padding-left: 15px;
-    border: 1px solid ${(props) => props.theme.borderColor};
-    border-radius: 3px;
-  }
 `;
 
 const IdArea = styled(Area)`
   flex-direction: row;
+  padding: 0;
   .idInput {
     width: 360px;
     display: flex;
@@ -115,17 +119,13 @@ function Join() {
     <>
       <Header />
       <Container>
-        <p>회원정보를 입력해주세요</p>
+        <Title>회원가입</Title>
         <Form>
           <div className="areas">
-            <IdArea className="idArea">
+            <IdArea>
               <div className="idInput">
                 <label htmlFor="id">아이디</label>
-                <Input
-                  type="text"
-                  placeholder="아이디를 입력하세요"
-                  name="id"
-                />
+                <Input type="text" placeholder="아이디를 입력하세요" id="id" />
               </div>
               <button className="checkId">중복 확인</button>
             </IdArea>
@@ -135,7 +135,7 @@ function Join() {
               <Input
                 type="password"
                 placeholder="비밀번호를 입력하세요"
-                name="pw"
+                id="pw"
               />
             </Area>
 
@@ -144,13 +144,13 @@ function Join() {
               <Input
                 type="password"
                 placeholder="비밀번호를 한번 더 입력하세요"
-                name="pw2"
+                id="pw2"
               />
             </Area>
 
             <Area>
               <label htmlFor="name">이름</label>
-              <Input type="text" placeholder="이름을 입력하세요" name="name" />
+              <Input type="text" placeholder="이름을 입력하세요" id="name" />
             </Area>
 
             <Area>
@@ -158,7 +158,7 @@ function Join() {
               <Input
                 type="number"
                 placeholder="휴대폰 번호를 입력하세요"
-                name="pw2"
+                id="pw2"
               />
             </Area>
           </div>
@@ -181,7 +181,7 @@ function Join() {
                 </button>
               </div>
               <div className="term">
-                <input type="checkbox" />
+                <input type="checkbox" id="termsPrivacyCollect" />
                 <label htmlFor="termsPrivacyCollect">
                   [필수] 개인정보 수집 및 이용 동의
                 </label>
