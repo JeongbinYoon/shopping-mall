@@ -621,6 +621,7 @@ export const discountItemState = atom<IItem[]>({
   ],
 });
 
+// 옵션 선택
 export interface selectOption {
   color?: string | null;
   size?: string | null;
@@ -645,6 +646,12 @@ export const selectedItemState = atom<selectOption[]>({
       size: null,
     },
   ],
+});
+
+// 관심상품 등록
+export const isLikedState = atom<boolean>({
+  key: "isliked",
+  default: false,
 });
 
 // 상세정보 탭

@@ -3,9 +3,14 @@ import { Link, useParams } from "react-router-dom";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCircleXmark,
+  faHeart as faSolidHeart,
+} from "@fortawesome/free-solid-svg-icons";
+import { faHeart } from "@fortawesome/free-regular-svg-icons";
 import {
   IReview,
+  isLikedState,
   ITabInfo,
   reviewState,
   selectColorState,
@@ -152,13 +157,20 @@ const DetailArea = styled.div`
         height: 50px;
         margin-right: 10px;
         background-color: transparent;
+        color: ${(props) => props.theme.textColor2};
         font-size: 18px;
         border: 1px solid ${(props) => props.theme.borderColor};
         cursor: pointer;
       }
       .likeBtn {
         min-width: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         border-radius: 50%;
+      }
+      .likeBtn.active {
+        color: #f86364;
       }
       .cartBtn {
         width: 50%;
@@ -294,6 +306,11 @@ function Product_detail() {
     tab.classList.add("active");
   };
 
+  // 관심상품 등록
+  const [isLiked, setIsLiked] = useRecoilState<boolean>(isLikedState);
+  const likeBtnClick = (): any => {
+    setIsLiked((current) => !current);
+  };
   return (
     <>
       <Header />
@@ -405,7 +422,16 @@ function Product_detail() {
             </div>
 
             <div className="itemButtons">
-              <button className="likeBtn">♡</button>
+              {isLiked ? (
+                <button onClick={likeBtnClick} className="likeBtn active">
+                  <FontAwesomeIcon icon={faSolidHeart} />
+                </button>
+              ) : (
+                <button onClick={likeBtnClick} className="likeBtn">
+                  <FontAwesomeIcon icon={faHeart} />
+                </button>
+              )}
+
               <button onClick={addCart} className="cartBtn">
                 장바구니
               </button>

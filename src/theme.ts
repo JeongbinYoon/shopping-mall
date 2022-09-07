@@ -17,6 +17,7 @@ export const lightTheme: DefaultTheme = {
   headerHoverColor: "#FFFFFF",
   buttonColor: "#777777",
   borderColor: "#CCCCCC",
+  borderDarkColor: "#333333",
   mobile: `(max-width:${size.mobile})`,
   tabletS: `(max-width:${size.tabletS})`,
   tabletM: `(max-width:${size.tabletM})`,
