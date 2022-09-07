@@ -29,8 +29,8 @@ const Form = styled.form`
   .util {
     display: flex;
     justify-content: space-between;
-    .findAccount a {
-      margin-left: 10px;
+    .findAccount a:last-child::before {
+      content: " | ";
     }
   }
 `;
