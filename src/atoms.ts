@@ -682,3 +682,14 @@ export const reviewState = atom<IReview[]>({
   key: "review",
   default: [],
 });
+
+// 로그인
+export interface ILogin {
+  username: string;
+  password: string;
+}
+
+export const loginState = atom<ILogin>({
+  key: "login",
+  default: { username: "", password: "null" },
+});

@@ -2,6 +2,7 @@ import { ThemeProvider, createGlobalStyle } from "styled-components";
 import Router from "./Router";
 import { lightTheme } from "./theme";
 import { HelmetProvider } from "react-helmet-async";
+import { QueryClient, QueryClientProvider } from "react-query";
 
 const GlobalStyle = createGlobalStyle`
   @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&family=Source+Sans+Pro:wght@300;400&display=swap');
@@ -61,14 +62,18 @@ a{
 }
 `;
 
+const queryClient = new QueryClient();
+
 function App() {
   return (
     <>
       <ThemeProvider theme={lightTheme}>
-        <GlobalStyle />
-        <HelmetProvider>
-          <Router />
-        </HelmetProvider>
+        <QueryClientProvider client={queryClient}>
+          <GlobalStyle />
+          <HelmetProvider>
+            <Router />
+          </HelmetProvider>
+        </QueryClientProvider>
       </ThemeProvider>
     </>
   );

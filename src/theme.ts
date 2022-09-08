@@ -18,6 +18,7 @@ export const lightTheme: DefaultTheme = {
   buttonColor: "#777777",
   borderColor: "#CCCCCC",
   borderDarkColor: "#333333",
+  pointColor: "#186a9c",
   mobile: `(max-width:${size.mobile})`,
   tabletS: `(max-width:${size.tabletS})`,
   tabletM: `(max-width:${size.tabletM})`,
