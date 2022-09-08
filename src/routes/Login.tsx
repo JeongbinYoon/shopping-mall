@@ -2,9 +2,9 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import styled, { keyframes } from "styled-components";
 import Header from "../components/Header";
-import { ILogin, loginState } from "../atoms";
+import { ILogin } from "../atoms";
 import { useMutation } from "react-query";
-import { login } from "../api";
+import { onLogin } from "../api";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
@@ -107,7 +107,7 @@ const LoadingSpinner = styled.div`
 
 function Login() {
   // 로그인 정보 post
-  const { mutate, isLoading, isError, error, isSuccess } = useMutation(login);
+  const { mutate, isLoading, isError, error, isSuccess } = useMutation(onLogin);
 
   // 로그인 버튼 클릭시 input값 전달
   const { register, handleSubmit, setValue } = useForm<ILogin>();

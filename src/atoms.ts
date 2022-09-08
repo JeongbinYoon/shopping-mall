@@ -693,3 +693,15 @@ export const loginState = atom<ILogin>({
   key: "login",
   default: { username: "", password: "null" },
 });
+
+// 회원가입
+export interface IJoin {
+  username: string;
+  password: string;
+  role: string;
+}
+
+export const joinState = atom<IJoin>({
+  key: "join",
+  default: { username: "", password: "null", role: "ROLE_USER" },
+});
