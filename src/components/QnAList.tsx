@@ -21,15 +21,11 @@ const ReviewListContainer = styled.section`
     justify-content: center;
     text-align: center;
   }
-  .reviewId {
+  .qnaId {
     min-width: 40px;
     /* border: 1px solid #f00; */
   }
-  .reviewRate {
-    min-width: 100px;
-    /* border: 1px solid #f00; */
-  }
-  .reviewContent {
+  .qnaTitle {
     width: 100%;
     height: 30px;
     padding-left: 5px;
@@ -57,7 +53,7 @@ const ReviewListContainer = styled.section`
         width: 100%;
       }
     }
-    .reviewContent {
+    .qnaTitle {
       font-size: 14px;
     }
     border-bottom: 1px solid ${(props) => props.theme.borderColor};
@@ -69,54 +65,49 @@ const Subtitle = styled.h4`
   font-weight: 700;
 `;
 
-function ReviewList() {
+function QnAList() {
   return (
     <ReviewListContainer>
       <div className="util">
-        <Subtitle>작성한 리뷰</Subtitle>
+        <Subtitle>1:1 문의</Subtitle>
         <Link to={"#"}>
           더보기 <FontAwesomeIcon icon={faAngleRight} />
         </Link>
       </div>
       <ul className="listHeader">
-        <li className="reviewId">번호</li>
-        <li className="reviewRate">평점</li>
-        <li className="reviewContent">내용</li>
+        <li className="qnaId">번호</li>
+        <li className="qnaTitle">제목</li>
       </ul>
       <ul className="listBody">
         <li>
-          <span className="reviewId">1</span>
-          <span className="reviewRate">★★★★★</span>
+          <span className="qnaId">1</span>
           <Link to="/">
-            <p className="reviewContent">
-              와우~~보들보들 하구요 촉감이너무 좋네요~ 시원해요~~ 추천~!!!
+            <p className="qnaTitle">
+              질문 질문 질문 질문 질문 질문 질문 질문질문 질문 질문 질문 질문
+              질문 질문 질문{" "}
             </p>
           </Link>
         </li>
         <li>
-          <span className="reviewId">1</span>
-          <span className="reviewRate">★★★★★</span>
+          <span className="qnaId">1</span>
           <Link to="/">
-            <p className="reviewContent">
-              와우~~보들보들 하구요 촉감이너무 좋네요~ 시원해요~~ 추천~!!!
+            <p className="qnaTitle">질문 질문 질문 질문 질문 질문 질문 질문</p>
+          </Link>
+        </li>
+        <li>
+          <span className="qnaId">1</span>
+          <Link to="/">
+            <p className="qnaTitle">
+              질문 질문 질문 질문 질문 질문 질문 질문 질문 질문 질문 질문 질문
             </p>
           </Link>
         </li>
         <li>
-          <span className="reviewId">1</span>
-          <span className="reviewRate">★★★★★</span>
+          <span className="qnaId">1</span>
           <Link to="/">
-            <p className="reviewContent">
-              와우~~보들보들 하구요 촉감이너무 좋네요~ 시원해요~~ 추천~!!!
-            </p>
-          </Link>
-        </li>
-        <li>
-          <span className="reviewId">1</span>
-          <span className="reviewRate">★★★★★</span>
-          <Link to="/">
-            <p className="reviewContent">
-              와우~~보들보들 하구요 촉감이너무 좋네요~ 시원해요~~ 추천~!!!
+            <p className="qnaTitle">
+              질문 질문 질문 질문 질문 질문 질문 질문 질문 질문 질문 질문 질문
+              질문 질문 질문 질문 질문 질문 질문 질문 질문 질문 질문 질문
             </p>
           </Link>
         </li>
@@ -124,4 +115,4 @@ function ReviewList() {
     </ReviewListContainer>
   );
 }
-export default ReviewList;
+export default QnAList;

@@ -18,14 +18,13 @@ const Container = styled.div`
   margin-top: 50px;
   .innerContainer {
     display: flex;
-    border: 1px solid #f00;
+    /* border: 1px solid #f00; */
   }
 `;
 
 const Nav = styled.nav`
   width: 200px;
   min-width: 120px;
-  border: 1px solid #00f;
   h3 {
     margin-bottom: 15px;
     font-size: 16px;
@@ -58,7 +57,8 @@ const Subtitle = styled.h4`
 `;
 
 const MyOrder = styled.div`
-  border: 1px solid tomato;
+  /* border: 1px solid tomato; */
+  margin-bottom: 20px;
   .order {
     display: flex;
     align-items: center;

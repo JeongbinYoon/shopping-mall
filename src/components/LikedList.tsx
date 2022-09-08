@@ -52,7 +52,7 @@ const OrderList = styled.ul`
   }
 `;
 
-function RecentOrderList() {
+function LikedList() {
   return (
     <Section>
       <Subtitle>진행 중인 주문</Subtitle>
@@ -108,4 +108,4 @@ function RecentOrderList() {
   );
 }
 
-export default RecentOrderList;
+export default LikedList;
