@@ -435,7 +435,7 @@ function Product_detail() {
               <button onClick={addCart} className="cartBtn">
                 장바구니
               </button>
-              <Link to={"/"} className="buyBtn">
+              <Link to={"/order"} className="buyBtn">
                 구매하기
               </Link>
             </div>

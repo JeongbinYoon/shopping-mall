@@ -3,6 +3,7 @@ import Join from "./routes/Join";
 import Login from "./routes/Login";
 import Main from "./routes/Main";
 import Mypage from "./routes/Mypage";
+import Order from "./routes/Order";
 import Product_detail from "./routes/Product_detail";
 
 function Router() {
@@ -14,6 +15,7 @@ function Router() {
         <Route path="/login" element={<Login />}></Route>
         <Route path="/join" element={<Join />}></Route>
         <Route path="/mypage" element={<Mypage />}></Route>
+        <Route path="/order" element={<Order />}></Route>
       </Routes>
     </BrowserRouter>
   );
