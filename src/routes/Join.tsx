@@ -13,14 +13,13 @@ const Container = styled.div`
   flex-direction: column;
   max-width: 460px;
   margin: 0 auto;
-  margin-top: 110px;
+  margin-top: 80px;
 `;
 
 const Title = styled.h2`
-  margin-bottom: 30px;
+  margin: 50px;
   text-align: center;
   font-size: 24px;
-  font-weight: 700;
 `;
 
 const Form = styled.form`

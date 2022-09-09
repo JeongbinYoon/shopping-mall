@@ -69,11 +69,11 @@ function Best() {
       <Container>
         {bestItem.map((item, idx) => (
           <Item key={idx}>
-            <Link to={`/product/${item.product_id}`}>
+            <Link to={`/product/prd=${item.product_id}`}>
               <img src={item.imgURL} alt="" />
             </Link>
             <div className="itemName">
-              <Link to={`/product/${item.product_id}`}>
+              <Link to={`/product/prd=${item.product_id}`}>
                 <span>{item.name}</span>
               </Link>
             </div>

@@ -11,7 +11,7 @@ export const onLogin = async (userInfo: ILogin): Promise<string> => {
 
 export const onJoin = async (userInfo: IJoin): Promise<string> => {
   const { data } = await axios.post<string>(
-    `http://localhost:8080/login`,
+    `http://localhost:8080/join`,
     userInfo
   );
   return data;

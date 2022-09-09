@@ -5,21 +5,22 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import MyDashboard from "../components/MyDashboard";
 
-const Title = styled.h2`
-  margin-top: 110px;
-  margin-bottom: 30px;
-  font-size: 24px;
-  text-align: center;
-`;
-
 const Container = styled.div`
+  display: flex;
+  flex-direction: column;
   width: 85%;
   margin: 0 auto;
-  margin-top: 50px;
+  margin-top: 80px;
   .innerContainer {
     display: flex;
     /* border: 1px solid #f00; */
   }
+`;
+
+const Title = styled.h2`
+  margin: 50px 0;
+  font-size: 24px;
+  text-align: center;
 `;
 
 const Nav = styled.nav`
@@ -138,8 +139,8 @@ function Mypage() {
   return (
     <>
       <Header />
-      <Title>마이페이지</Title>
       <Container>
+        <Title>마이페이지</Title>
         <div className="innerContainer">
           <Nav>
             <ul>

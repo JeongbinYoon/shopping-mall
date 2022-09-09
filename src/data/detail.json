@@ -11,7 +11,7 @@
     ],
     "name": "탄탄 조거팬츠 (4Color)",
     "price": 29900,
-    "discountRate": 30,
+    "dcRate": 30,
     "color": ["블랙", "그레이", "오트밀", "화이트멜란지"],
     "size": ["S", "M", "L", "XL", "2XL"],
     "category": ["discount", "overnightShipping"],

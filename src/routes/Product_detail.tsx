@@ -19,7 +19,7 @@ import {
   tabInfoState,
 } from "../atoms";
 import Header from "../components/Header";
-import itemData from "../detail.json";
+import itemData from "../data/detail.json";
 import reviewData from "../review.json";
 import Reviews from "../components/Review";
 
@@ -325,14 +325,12 @@ function Product_detail() {
               <span className="Price">
                 KRW {itemDetail.price.toLocaleString()}
               </span>
-              {itemDetail.discountRate ? (
+              {itemDetail.dcRate ? (
                 <span className="dcPrice">
                   KRW{" "}
                   {(
                     itemDetail.price -
-                    Math.floor(
-                      (itemDetail.price * itemDetail.discountRate) / 100
-                    )
+                    Math.floor((itemDetail.price * itemDetail.dcRate) / 100)
                   ).toLocaleString()}
                 </span>
               ) : null}
@@ -370,13 +368,12 @@ function Product_detail() {
                       <div key={idx} data-idx={idx}>
                         <span>{`${el.color} / ${el.size}`}</span>
                         <div className="priceAndBtn">
-                          {itemDetail.discountRate ? (
+                          {itemDetail.dcRate ? (
                             <span className="price">
                               {(
                                 itemDetail.price -
                                 Math.floor(
-                                  (itemDetail.price * itemDetail.discountRate) /
-                                    100
+                                  (itemDetail.price * itemDetail.dcRate) / 100
                                 )
                               ).toLocaleString()}
                             </span>
@@ -396,14 +393,14 @@ function Product_detail() {
             <div className="itemTotal">
               total:{" "}
               <span className="priceResult">
-                {itemDetail.discountRate
+                {itemDetail.dcRate
                   ? (
                       selectedItem.filter(
                         (el: selectOption) => el.size !== null
                       ).length *
                       (itemDetail.price -
                         Math.floor(
-                          (itemDetail.price * itemDetail.discountRate) / 100
+                          (itemDetail.price * itemDetail.dcRate) / 100
                         ))
                     ).toLocaleString()
                   : (
@@ -435,7 +432,7 @@ function Product_detail() {
               <button onClick={addCart} className="cartBtn">
                 장바구니
               </button>
-              <Link to={"/order"} className="buyBtn">
+              <Link to={`/order/prd=${productId}`} className="buyBtn">
                 구매하기
               </Link>
             </div>

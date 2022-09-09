@@ -11,11 +11,14 @@ function Router() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Main />}></Route>
-        <Route path="/product/:productId" element={<Product_detail />}></Route>
+        <Route
+          path="/product/prd=:productId"
+          element={<Product_detail />}
+        ></Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/join" element={<Join />}></Route>
         <Route path="/mypage" element={<Mypage />}></Route>
-        <Route path="/order" element={<Order />}></Route>
+        <Route path="/order/prd=:productId" element={<Order />}></Route>
       </Routes>
     </BrowserRouter>
   );
