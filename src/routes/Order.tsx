@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import Header from "../components/Header";
 import { requestPaymentFn } from "../service/payment";
-import { useEffect } from "react";
 import orderData from "../data/order.json";
 
 const Container = styled.div`
@@ -73,15 +72,146 @@ const UserInfo = styled.div`
   }
 `;
 
-const PrdInfo = styled.div`
+const Result = styled.div`
+  display: flex;
+  width: 100%;
   margin-top: 100px;
-  border-top: 1px solid #777;
 `;
-const Payment = styled.div``;
+
+const PrdInfo = styled.div`
+  width: 70%;
+  border-top: 1px solid #777;
+  > div {
+    display: flex;
+    padding: 20px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    .options {
+      display: flex;
+      align-items: center;
+      width: 100%;
+    }
+    .imgBox {
+      min-width: 100px;
+      height: 100px;
+      overflow: hidden;
+      object-fit: cover;
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+    .prdName {
+      margin-bottom: 10px;
+    }
+    .prdColorSize {
+      color: ${(props) => props.theme.textColor2};
+      font-size: 14px;
+    }
+    .prdPrice {
+      margin-left: auto;
+      margin-right: 10%;
+      font-size: 20px;
+    }
+    .prdQty {
+      margin-right: 5%;
+    }
+  }
+`;
+
+const Payment = styled.div`
+  width: 30%;
+  border-top: 1px solid #777;
+  margin-left: 5%;
+`;
+
+const FinalPayment = styled.div`
+  padding: 30px;
+  border: 1px solid #ddd;
+  background-color: #fafafa;
+  > div:first-child {
+    border-bottom: 1px solid #ccc;
+  }
+  > div:last-child {
+    display: flex;
+    align-items: center;
+    padding-top: 30px;
+    span:nth-child(2) {
+      margin-left: auto;
+      margin-top: -5px;
+      color: #f86364;
+      font-size: 28px;
+      font-weight: 700;
+    }
+    span:nth-child(3) {
+      color: #f86364;
+    }
+  }
+  > div > div {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    span:nth-child(2) {
+      margin-left: auto;
+      margin-top: -5px;
+      font-size: 20px;
+      font-weight: 700;
+    }
+  }
+`;
+
+const SubmitBtn = styled.input`
+  width: 100%;
+  height: 50px;
+  margin-top: 10px;
+  background-color: ${(props) => props.theme.pointColor};
+  color: #fff;
+  font-size: 18px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+`;
+
+// 개별 상품정보 최종 가격
+const calcPrice = (price: number, dcRate: number | null) => {
+  const resultPrice = dcRate === null ? price : price - (price * dcRate) / 100;
+  return resultPrice;
+};
+
+// 결제 정보 총 상품 금액
+const totalPrice = (data: any) => {
+  let total = 0;
+  data.orderItems.map((item: any) => (total += item.price * item.option.qty));
+  return total;
+};
+
+// 결제 정보 배송비 유무
+const shippingFee = (data: any) => {
+  let total = 0;
+  data.orderItems.map((item: any) =>
+    item.shipping_fee_free ? (total = 3000) : 0
+  );
+  return total;
+};
+
+// 결제 정보 총 할인 금액
+const discountPrice = (data: any) => {
+  let total = 0;
+  data.orderItems.map(
+    (item: any) => (total += (item.price * item.dcRate) / 100)
+  );
+  return total;
+};
+
+// 최종 결제 금액
+const finalPaymentPrice = (data: any) => {
+  return totalPrice(data) + shippingFee(data) - discountPrice(data);
+};
 
 function Order() {
   // 주문 상품 데이터 요청
   const data = orderData;
+
   return (
     <>
       <Header />
@@ -146,28 +276,65 @@ function Order() {
               </ul>
             </div>
           </UserInfo>
-          <PrdInfo>
-            <Subtitle>상품 정보</Subtitle>
-            <div>
-              <div className="imgBox">
-                <img src={data.imgURL} alt={data.name} />
-              </div>
-              <div className="prdOption">
-                <p>{data.name}</p>
-                <p>
-                  <span>
-                    {data.option.color} / {data.option.size}
-                  </span>
-                </p>
-              </div>
-              <div>
-                <span>{data.price}</span>
-              </div>
-            </div>
-          </PrdInfo>
-          <Payment></Payment>
+          <Result>
+            <PrdInfo>
+              <Subtitle>상품 정보</Subtitle>
+              {data.orderItems.map((item) => (
+                <div key={item.product_id}>
+                  <div className="imgBox">
+                    <img src={item.imgURL} alt={item.name} />
+                  </div>
+                  <div className="options">
+                    <div className="prdOption">
+                      <p className="prdName">{item.name}</p>
+                      <p className="prdColorSize">
+                        <span>
+                          {item.option.color} / {item.option.size}
+                        </span>
+                      </p>
+                    </div>
+                    <div className="prdPrice">
+                      <span>
+                        {calcPrice(item.price, item.dcRate).toLocaleString()}원
+                      </span>
+                    </div>
+                    <div className="prdQty">
+                      <span>{item.option.qty}개</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </PrdInfo>
+            <Payment>
+              <Subtitle>결제 정보</Subtitle>
+              <FinalPayment>
+                <div>
+                  <div>
+                    <span>총 상품금액</span>
+                    <span>{totalPrice(data).toLocaleString()}</span>
+                    <span>원</span>
+                  </div>
+                  <div>
+                    <span>배송비</span>
+                    <span>+ {shippingFee(data).toLocaleString()}</span>
+                    <span>원</span>
+                  </div>
+                  <div>
+                    <span>할인</span>
+                    <span>- {discountPrice(data).toLocaleString()}</span>
+                    <span>원</span>
+                  </div>
+                </div>
+                <div>
+                  <span>최종 결제금액</span>
+                  <span>{finalPaymentPrice(data).toLocaleString()}</span>
+                  <span>원</span>
+                </div>
+              </FinalPayment>
+              <SubmitBtn type="submit" value={"결제하기"} />
+            </Payment>
+          </Result>
         </Form>
-        <button onClick={requestPaymentFn}>구매하기</button>
       </Container>
     </>
   );

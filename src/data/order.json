@@ -1,12 +1,30 @@
 {
-  "imgURL": "https://img.nstationmall.com/mall//goods/000/000/003/586/1.jpg?updated_at=20220531144422",
-  "name": "탄탄조거팬트(4color)",
-  "price": 99000,
-  "dcRate": 30,
-  "shipping_fee": 3000,
-  "option": {
-    "color": "블랙",
-    "size": "XL",
-    "qty": "1"
-  }
+  "orderItems": [
+    {
+      "product_id": 1,
+      "imgURL": "https://img.nstationmall.com/mall//goods/000/000/003/586/1.jpg?updated_at=20220531144422",
+      "name": "탄탄조거팬트(4color)",
+      "price": 99000,
+      "dcRate": null,
+      "shipping_fee_free": false,
+      "option": {
+        "color": "블랙",
+        "size": "XL",
+        "qty": "2"
+      }
+    },
+    {
+      "product_id": 2,
+      "imgURL": "https://img.nstationmall.com/mall//goods/000/000/003/586/1.jpg?updated_at=20220531144422",
+      "name": "탄탄조거팬트(4color)",
+      "price": 99000,
+      "dcRate": 30,
+      "shipping_fee_free": true,
+      "option": {
+        "color": "블랙",
+        "size": "XL",
+        "qty": "1"
+      }
+    }
+  ]
 }
