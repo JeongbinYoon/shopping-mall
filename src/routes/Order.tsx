@@ -2,6 +2,8 @@ import styled from "styled-components";
 import Header from "../components/Header";
 import { requestPaymentFn } from "../service/payment";
 import orderData from "../data/order.json";
+import { useForm } from "react-hook-form";
+import { useState } from "react";
 
 const Container = styled.div`
   display: flex;
@@ -29,9 +31,17 @@ const Input = styled.input`
   width: 200px;
   height: 40px;
   margin: 0 5px;
+  padding: 0%;
   padding-left: 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
   .addressList &.adrressInput {
     width: 400px;
+  }
+
+  &:focus {
+    border: none;
+    outline: 1px solid #f86364;
   }
 `;
 
@@ -48,7 +58,26 @@ const UserInfo = styled.div`
       align-items: center;
       padding: 10px 0;
       border-top: 1px solid #ddd;
+      &.emailArea {
+        select {
+          height: 40px;
+          margin-right: 5px;
+          border: 1px solid ${(props) => props.theme.borderColor};
+        }
+      }
+      .addressList {
+        .findPostCodeBtn {
+          height: 40px;
+          margin: 0;
+          margin-right: 5px;
+          padding: 0 10px;
+          border: 1px solid ${(props) => props.theme.borderColor};
+          border-radius: 3px;
+        }
+      }
       .addressList li {
+        display: flex;
+        align-items: center;
         margin-bottom: 5px;
       }
       .addressList li:last-child {
@@ -60,6 +89,7 @@ const UserInfo = styled.div`
           height: 40px;
           margin: 0 5px;
           padding-left: 5px;
+          border: 1px solid ${(props) => props.theme.borderColor};
         }
         ${Input} {
           width: 100px;
@@ -68,6 +98,9 @@ const UserInfo = styled.div`
     }
     h4 {
       min-width: 200px;
+      span {
+        color: #f86364;
+      }
     }
   }
 `;
@@ -172,6 +205,11 @@ const SubmitBtn = styled.input`
   cursor: pointer;
 `;
 
+const ErrorMessage = styled.span`
+  color: #f86364;
+  font-size: 14px;
+`;
+
 // 개별 상품정보 최종 가격
 const calcPrice = (price: number, dcRate: number | null) => {
   const resultPrice = dcRate === null ? price : price - (price * dcRate) / 100;
@@ -208,50 +246,120 @@ const finalPaymentPrice = (data: any) => {
   return totalPrice(data) + shippingFee(data) - discountPrice(data);
 };
 
+// 에러메세지 타입
+interface IForm {
+  username: string;
+  postcode: string;
+  address: string;
+  detailAddress: string;
+  number: string;
+  number2: string;
+  number3: string;
+  email: string;
+  email2: string;
+  message: string;
+}
+
 function Order() {
   // 주문 상품 데이터 요청
   const data = orderData;
 
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<IForm>();
+
+  const onValid = (data: any) => {
+    console.log(data);
+  };
+
+  // 이메일 선택
+  const [selectedEmail, setSelectedEmail] = useState();
+
+  const selectEmail = (e: any) => {
+    setSelectedEmail(e.target.value);
+    console.log(e.target.value);
+  };
+  const [email, setEmail] = useState("");
+  const emailChange = (e: any) => {
+    setEmail(e.target.value);
+  };
+
+  console.log(errors);
   return (
     <>
       <Header />
       <Container>
         <Title>주문/결제</Title>
-        <Form>
+        <Form onSubmit={handleSubmit(onValid)}>
           <UserInfo>
             <Subtitle>배송 정보</Subtitle>
             <div>
               <ul className="userInfoLists">
                 <li>
-                  <h4>받으시는 분</h4>
-                  <Input type="text" />
+                  <h4>
+                    <span>*</span> 받는 분
+                  </h4>
+                  <Input
+                    {...register("username", {
+                      required: "받는 분을 입력해주세요",
+                      minLength: {
+                        value: 2,
+                        message: "두 글자 이상 입력해주세요",
+                      },
+                    })}
+                  />
+                  <ErrorMessage>{errors?.username?.message}</ErrorMessage>
                 </li>
                 <li>
-                  <h4>주소</h4>
+                  <h4>
+                    <span>*</span> 주소
+                  </h4>
                   <ul className="addressList">
                     <li>
-                      <Input type="text" placeholder="우편번호" />
-                      <button>우편번호 찾기</button>
+                      <Input
+                        {...register("postcode", {
+                          required: "우편번호를 입력해주세요",
+                          minLength: {
+                            value: 5,
+                            message: "우편번호를 정확히 입력해주세요",
+                          },
+                        })}
+                        placeholder="우편번호"
+                      />
+                      <button className="findPostCodeBtn">우편번호 찾기</button>
+                      <ErrorMessage>{errors?.postcode?.message}</ErrorMessage>
                     </li>
                     <li>
                       <Input
+                        {...register("address", {
+                          required: "주소를 입력해주세요",
+                        })}
                         className="adrressInput"
-                        type="text"
                         placeholder="주소"
                       />
+                      <ErrorMessage>{errors?.address?.message}</ErrorMessage>
                     </li>
                     <li>
                       <Input
+                        {...register("detailAddress", {
+                          required: "상세주소를 입력해주세요",
+                        })}
                         className="adrressInput"
-                        type="text"
                         placeholder="상세주소"
                       />
+                      <ErrorMessage>
+                        {errors?.detailAddress?.message}
+                      </ErrorMessage>
                     </li>
                   </ul>
                 </li>
                 <li className="number">
-                  <h4>휴대폰 번호</h4>
-                  <select name="" id="">
+                  <h4>
+                    <span>*</span> 휴대폰 번호
+                  </h4>
+                  <select {...register("number")}>
                     <option value="010">010</option>
                     <option value="016">016</option>
                     <option value="017">017</option>
@@ -259,19 +367,89 @@ function Order() {
                     <option value="019">019</option>
                   </select>
                   <span>-</span>
-                  <Input type="text" />
+                  <Input
+                    {...register("number2", {
+                      required: "전화번호를 입력해주세요",
+                      minLength: {
+                        value: 4,
+                        message: "전화번호를 정확히 입력해주세요",
+                      },
+                      maxLength: {
+                        value: 4,
+                        message: "전화번호를 정확히 입력해주세요",
+                      },
+                      pattern: {
+                        value: /^[0-9]+$/,
+                        message: "전화번호를 정확히 입력해주세요",
+                      },
+                    })}
+                    maxLength={4}
+                  />
                   <span>-</span>
-                  <Input type="text" />
+                  <Input
+                    {...register("number3", {
+                      required: "전화번호를 입력해주세요",
+                      minLength: {
+                        value: 4,
+                        message: "전화번호를 정확히 입력해주세요",
+                      },
+                      maxLength: {
+                        value: 4,
+                        message: "전화번호를 정확히 입력해주세요",
+                      },
+                      pattern: {
+                        value: /^[0-9]+$/,
+                        message: "전화번호를 정확히 입력해주세요",
+                      },
+                    })}
+                    maxLength={4}
+                  />
+                  <ErrorMessage>
+                    {errors?.number2?.message ?? errors?.number3?.message}
+                  </ErrorMessage>
                 </li>
-                <li>
-                  <h4>이메일</h4>
-                  <Input type="text" />
+                <li className="emailArea">
+                  <h4>
+                    <span>*</span> 이메일
+                  </h4>
+                  <Input
+                    {...register("email", {
+                      required: "이메일을 입력해주세요",
+                      pattern: {
+                        value:
+                          /^^([\w\.\_\-])*[a-zA-Z0-9]+([\w\.\_\-])*([a-zA-Z0-9])+([\w\.\_\-])$/,
+                        message: "이메일을 정확히 입력해주세요",
+                      },
+                    })}
+                  />
                   <span>@</span>
-                  <Input type="text" />
+                  <Input
+                    {...register("email2", {
+                      required: "이메일을 입력해주세요",
+                      pattern: {
+                        value: /^([a-zA-Z0-9]+\.)+[a-zA-Z0-9]{2,8}$/,
+                        message: "이메일을 정확히 입력해주세요",
+                      },
+                    })}
+                    defaultValue={selectedEmail}
+                    onChange={emailChange}
+                    value={selectedEmail === "직접입력" ? email : selectedEmail}
+                  />
+                  <select onChange={selectEmail}>
+                    <option value="직접입력">직접입력</option>
+                    <option value="naver.com">naver.com</option>
+                    <option value="gmail.com">gmail.com</option>
+                    <option value="daum.net">daum.net</option>
+                    <option value="nate.com">nate.com</option>
+                    <option value="hanmail.com">hanmail.com</option>
+                  </select>
+                  <ErrorMessage>
+                    {errors?.email?.message ?? errors?.email2?.message}
+                  </ErrorMessage>
                 </li>
                 <li>
                   <h4>배송 메모</h4>
-                  <Input as="textarea" />
+                  <Input as="textarea" {...register("message")} />
                 </li>
               </ul>
             </div>
