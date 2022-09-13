@@ -1,4 +1,5 @@
 {
+  "order_id": 1234,
   "orderItems": [
     {
       "product_id": 1,
@@ -19,7 +20,7 @@
       "name": "탄탄조거팬트(4color)",
       "price": 99000,
       "dcRate": 30,
-      "shipping_fee_free": true,
+      "shipping_fee_free": false,
       "option": {
         "color": "블랙",
         "size": "XL",

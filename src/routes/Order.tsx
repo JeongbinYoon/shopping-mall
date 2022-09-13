@@ -224,14 +224,14 @@ const totalPrice = (data: any) => {
   return total;
 };
 
-// 결제 정보 배송비 유무
-const shippingFee = (data: any) => {
-  let total = 0;
-  data.orderItems.map((item: any) =>
-    item.shipping_fee_free ? (total = 3000) : 0
-  );
-  return total;
-};
+// // 결제 정보 배송비 유무
+// const shippingFee = (data: any) => {
+//   let total = 0;
+//   data.orderItems.map((item: any) =>
+//     item.shipping_fee_free ? (total = 3000) : 0
+//   );
+//   return total;
+// };
 
 // 결제 정보 총 할인 금액
 const discountPrice = (data: any) => {
@@ -244,7 +244,8 @@ const discountPrice = (data: any) => {
 
 // 최종 결제 금액
 const finalPaymentPrice = (data: any) => {
-  return totalPrice(data) + shippingFee(data) - discountPrice(data);
+  // return totalPrice(data) + shippingFee(data) - discountPrice(data);
+  return totalPrice(data) - discountPrice(data);
 };
 
 // 에러메세지 타입
@@ -271,8 +272,53 @@ function Order() {
     formState: { errors },
   } = useForm<IForm>();
 
+  // 결제하기 버튼 클릭 시 유효성 검사 모두 통과했을 경우
   const onValid = (data: any) => {
     console.log(data);
+    // totalPrice
+    let totalPrice = finalPaymentPrice(orderData);
+
+    // order_name
+    let totalItemName = "";
+    orderData.orderItems.map((item) => (totalItemName += `${item.name}, `));
+
+    totalItemName = totalItemName.replace(/, $/, "");
+
+    // order_id
+    const order_id = orderData.order_id;
+
+    // user
+    const user = {
+      id: "user01",
+      username: "이름",
+      phone: `${data.number}${data.number2}${data.number3}`,
+      email: `${data.email}@${data.email2}`,
+    };
+
+    // items
+    const items: any = [];
+    orderData.orderItems.map((item) =>
+      items.push({
+        id: item.product_id,
+        name: item.name,
+        qty: item.option.qty,
+        price: item.dcRate
+          ? item.price - (item.price * item.dcRate) / 100
+          : item.price,
+      })
+    );
+
+    // result
+    const result = {
+      price: totalPrice,
+      order_name: totalItemName,
+      order_id,
+      user,
+      items,
+    };
+
+    console.log(result);
+    requestPaymentFn(result);
   };
 
   // 이메일 선택
@@ -495,7 +541,8 @@ function Order() {
                   </div>
                   <div>
                     <span>배송비</span>
-                    <span>+ {shippingFee(orderData).toLocaleString()}</span>
+                    {/* <span>+ {shippingFee(orderData).toLocaleString()}</span> */}
+                    <span>+ 0</span>
                     <span>원</span>
                   </div>
                   <div>

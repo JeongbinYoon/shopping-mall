@@ -1,11 +1,37 @@
 import { Bootpay } from "@bootpay/client-js";
 
-export const requestPaymentFn = async () => {
+interface IResultPaymentInfo {
+  price: number;
+  order_name: string;
+  order_id: number;
+  user: {
+    id: string;
+    username: string;
+    phone: string;
+    email: string;
+  };
+  items: [
+    {
+      id: string;
+      name: string;
+      qty: number;
+      price: number;
+    }
+  ];
+}
+
+export const requestPaymentFn = async ({
+  price,
+  order_name,
+  order_id,
+  user,
+  items,
+}: IResultPaymentInfo) => {
   const response = await Bootpay.requestPayment({
     application_id: "6319cd91d01c7e0020fa3bab",
-    price: 1000,
-    order_name: "테스트결제",
-    order_id: "TEST_ORDER_ID",
+    price,
+    order_name,
+    order_id: `${order_id}`,
     pg: "케이씨피",
     method: [
       "휴대폰",
@@ -17,19 +43,12 @@ export const requestPaymentFn = async () => {
       "카카오페이",
     ],
     user: {
-      id: "회원아이디",
-      username: "정빈",
-      phone: "01000000000",
-      email: "test@test.com",
+      id: user.id,
+      username: user.username,
+      phone: user.phone,
+      email: user.email,
     },
-    items: [
-      {
-        id: "item_id",
-        name: "테스트아이템",
-        qty: 1,
-        price: 1000,
-      },
-    ],
+    items: items,
     extra: {
       open_type: "iframe",
       card_quota: "0,2,3",
