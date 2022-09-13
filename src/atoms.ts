@@ -705,3 +705,16 @@ export const joinState = atom<IJoin>({
   key: "join",
   default: { username: "", password: "null", role: "ROLE_USER" },
 });
+
+// 주문결제 주소검색
+export interface IAddress {
+  zonecode: string | number;
+  address: string;
+}
+export const addressState = atom<IAddress>({
+  key: "address",
+  default: {
+    zonecode: "",
+    address: "",
+  },
+});

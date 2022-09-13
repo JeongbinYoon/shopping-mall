@@ -1,9 +1,10 @@
 import styled from "styled-components";
 import Header from "../components/Header";
 import { requestPaymentFn } from "../service/payment";
-import orderData from "../data/order.json";
+import data from "../data/order.json";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
+import Postcode from "../components/Postcode";
 
 const Container = styled.div`
   display: flex;
@@ -41,7 +42,7 @@ const Input = styled.input`
 
   &:focus {
     border: none;
-    outline: 1px solid #f86364;
+    outline: 1px solid ${(props) => props.theme.pointColor};
   }
 `;
 
@@ -62,19 +63,15 @@ const UserInfo = styled.div`
         select {
           height: 40px;
           margin-right: 5px;
-          border: 1px solid ${(props) => props.theme.borderColor};
-        }
-      }
-      .addressList {
-        .findPostCodeBtn {
-          height: 40px;
-          margin: 0;
-          margin-right: 5px;
-          padding: 0 10px;
+          color: ${(props) => props.theme.textColor};
           border: 1px solid ${(props) => props.theme.borderColor};
           border-radius: 3px;
+          &:focus {
+            outline: 1px solid ${(props) => props.theme.pointColor};
+          }
         }
       }
+
       .addressList li {
         display: flex;
         align-items: center;
@@ -90,6 +87,10 @@ const UserInfo = styled.div`
           margin: 0 5px;
           padding-left: 5px;
           border: 1px solid ${(props) => props.theme.borderColor};
+          border-radius: 3px;
+          &:focus {
+            outline: 1px solid ${(props) => props.theme.pointColor};
+          }
         }
         ${Input} {
           width: 100px;
@@ -262,7 +263,7 @@ interface IForm {
 
 function Order() {
   // 주문 상품 데이터 요청
-  const data = orderData;
+  const orderData = data;
 
   const {
     register,
@@ -328,7 +329,7 @@ function Order() {
                         })}
                         placeholder="우편번호"
                       />
-                      <button className="findPostCodeBtn">우편번호 찾기</button>
+                      <Postcode />
                       <ErrorMessage>{errors?.postcode?.message}</ErrorMessage>
                     </li>
                     <li>
@@ -457,7 +458,7 @@ function Order() {
           <Result>
             <PrdInfo>
               <Subtitle>상품 정보</Subtitle>
-              {data.orderItems.map((item) => (
+              {orderData.orderItems.map((item) => (
                 <div key={item.product_id}>
                   <div className="imgBox">
                     <img src={item.imgURL} alt={item.name} />
@@ -489,23 +490,23 @@ function Order() {
                 <div>
                   <div>
                     <span>총 상품금액</span>
-                    <span>{totalPrice(data).toLocaleString()}</span>
+                    <span>{totalPrice(orderData).toLocaleString()}</span>
                     <span>원</span>
                   </div>
                   <div>
                     <span>배송비</span>
-                    <span>+ {shippingFee(data).toLocaleString()}</span>
+                    <span>+ {shippingFee(orderData).toLocaleString()}</span>
                     <span>원</span>
                   </div>
                   <div>
                     <span>할인</span>
-                    <span>- {discountPrice(data).toLocaleString()}</span>
+                    <span>- {discountPrice(orderData).toLocaleString()}</span>
                     <span>원</span>
                   </div>
                 </div>
                 <div>
                   <span>최종 결제금액</span>
-                  <span>{finalPaymentPrice(data).toLocaleString()}</span>
+                  <span>{finalPaymentPrice(orderData).toLocaleString()}</span>
                   <span>원</span>
                 </div>
               </FinalPayment>
