@@ -2,11 +2,12 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import styled, { keyframes } from "styled-components";
 import Header from "../components/Header";
-import { ILogin } from "../atoms";
+import { ILogin, IToken, tokenState } from "../atoms";
 import { useMutation } from "react-query";
 import { onLogin } from "../api";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { useSetRecoilState } from "recoil";
 
 const Container = styled.div`
   display: flex;
@@ -106,20 +107,31 @@ const LoadingSpinner = styled.div`
 
 function Login() {
   // 로그인 정보 post
-  const { mutate, isLoading, isError, error, isSuccess } = useMutation(onLogin);
+  const { mutate, isLoading, isError, error, isSuccess, data } =
+    useMutation(onLogin);
 
   // 로그인 버튼 클릭시 input값 전달
   const { register, handleSubmit, setValue } = useForm<ILogin>();
-  const handleValid = ({ username, password }: ILogin) => {
+  const setToken = useSetRecoilState<any>(tokenState);
+  const handleValid = ({ email, password }: ILogin) => {
     mutate({
-      username,
+      email,
       password,
     });
-    setValue("username", "");
+    setValue("email", "");
     setValue("password", "");
   };
 
   const navigate = useNavigate();
+
+  if (isSuccess) {
+    const token = Object.values(data)[0];
+    setToken(token);
+    navigate("/");
+    localStorage.setItem("token", token);
+    console.log(localStorage.getItem("token"));
+  }
+
   return (
     <>
       <Header />
@@ -128,7 +140,7 @@ function Login() {
         <Form onSubmit={handleSubmit(handleValid)}>
           <Area>
             <Input
-              {...register("username", { required: "아이디를 입력하세요" })}
+              {...register("email", { required: "아이디를 입력하세요" })}
               type="id"
               placeholder="아이디"
             />
@@ -172,10 +184,7 @@ function Login() {
           </span>
         </LoadingSpinner>
       ) : (
-        <>
-          {isError && console.log(error)}
-          {isSuccess && navigate("/")}
-        </>
+        <>{isError && console.log(error)}</>
       )}
     </>
   );

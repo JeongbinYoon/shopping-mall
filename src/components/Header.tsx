@@ -1,5 +1,8 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { tokenState } from "../atoms";
+import { useEffect } from "react";
 
 const Menu = styled.li`
   a {
@@ -94,6 +97,17 @@ const Account = styled.div`
 `;
 
 function Header() {
+  const [tokenVal, setTokenVal] = useRecoilState<any>(tokenState);
+  const token = localStorage.getItem("token");
+
+  const onLogout = () => {
+    localStorage.removeItem("token");
+    setTokenVal(null);
+  };
+
+  useEffect(() => {
+    console.log(token);
+  }, [tokenVal]);
   return (
     <>
       <HeaderBox>
@@ -174,15 +188,26 @@ function Header() {
         </Nav>
       </HeaderBox>
       <Account>
-        <Link to={"/login"}>
-          <button>login</button>
-        </Link>
-        <Link to={"/join"}>
-          <button>join</button>
-        </Link>
-        <Link to={"/mypage"}>
-          <button>my page</button>
-        </Link>
+        {!token && (
+          <>
+            <Link to={"/login"}>
+              <button>login</button>
+            </Link>
+
+            <Link to={"/join"}>
+              <button>join</button>
+            </Link>
+          </>
+        )}
+
+        {token && (
+          <>
+            <button onClick={onLogout}>logout</button>
+            <Link to={"/mypage"}>
+              <button>my page</button>
+            </Link>
+          </>
+        )}
       </Account>
     </>
   );

@@ -685,25 +685,34 @@ export const reviewState = atom<IReview[]>({
 
 // 로그인
 export interface ILogin {
-  username: string;
+  email: string;
+  // username: string;
   password: string;
 }
-
 export const loginState = atom<ILogin>({
   key: "login",
-  default: { username: "", password: "null" },
+  default: { email: "", password: "null" },
+});
+
+// 토큰
+export interface IToken {
+  token: any | null;
+}
+export const tokenState = atom<IToken>({
+  key: "token",
+  default: { token: null },
 });
 
 // 회원가입
 export interface IJoin {
-  username: string;
+  email: string;
+  // username: string;
   password: string;
   role: string;
 }
-
 export const joinState = atom<IJoin>({
   key: "join",
-  default: { username: "", password: "null", role: "ROLE_USER" },
+  default: { email: "", password: "null", role: "ROLE_USER" },
 });
 
 // 주문결제 주소검색

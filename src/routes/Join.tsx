@@ -157,13 +157,13 @@ function Join() {
 
   // 회원가입 버튼 클릭시 input값 전달
   const { register, handleSubmit, setValue } = useForm<ILogin>();
-  const handleValid = ({ username, password }: ILogin) => {
+  const handleValid = ({ email, password }: ILogin) => {
     mutate({
-      username,
+      email,
       password,
       role: "ROLE_USER",
     });
-    setValue("username", "");
+    setValue("email", "");
     setValue("password", "");
   };
   const navigate = useNavigate();
@@ -178,7 +178,7 @@ function Join() {
               <div className="idInput">
                 <label htmlFor="id">아이디</label>
                 <Input
-                  {...register("username", { required: "아이디를 입력하세요" })}
+                  {...register("email", { required: "아이디를 입력하세요" })}
                   type="id"
                   placeholder="아이디를 입력하세요"
                   id="id"

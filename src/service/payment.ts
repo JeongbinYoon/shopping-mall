@@ -42,12 +42,7 @@ export const requestPaymentFn = async ({
       "네이버페이",
       "카카오페이",
     ],
-    user: {
-      id: user.id,
-      username: user.username,
-      phone: user.phone,
-      email: user.email,
-    },
+    user,
     items: items,
     extra: {
       open_type: "iframe",

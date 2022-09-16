@@ -3,7 +3,9 @@ import Header from "../components/Header";
 import { requestPaymentFn } from "../service/payment";
 import data from "../data/order.json";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useRecoilValue, useRecoilState } from "recoil";
+import { IAddress, addressState } from "../atoms";
 import Postcode from "../components/Postcode";
 
 const Container = styled.div`
@@ -289,10 +291,11 @@ function Order() {
 
     // user
     const user = {
-      id: "user01",
-      username: "이름",
+      id: "user02",
+      username: "이름2",
       phone: `${data.number}${data.number2}${data.number3}`,
       email: `${data.email}@${data.email2}`,
+      addr: `${data.address} ${data.address} ${data.detailAddress}`,
     };
 
     // items
@@ -318,8 +321,11 @@ function Order() {
     };
 
     console.log(result);
-    requestPaymentFn(result);
+    // requestPaymentFn(result);
   };
+
+  // 주소 찾기
+  const address = useRecoilValue<IAddress>(addressState);
 
   // 이메일 선택
   const [selectedEmail, setSelectedEmail] = useState();
@@ -367,13 +373,10 @@ function Order() {
                     <li>
                       <Input
                         {...register("postcode", {
-                          required: "우편번호를 입력해주세요",
-                          minLength: {
-                            value: 5,
-                            message: "우편번호를 정확히 입력해주세요",
-                          },
+                          required: true,
                         })}
                         placeholder="우편번호"
+                        value={address.zonecode}
                       />
                       <Postcode />
                       <ErrorMessage>{errors?.postcode?.message}</ErrorMessage>
@@ -381,10 +384,11 @@ function Order() {
                     <li>
                       <Input
                         {...register("address", {
-                          required: "주소를 입력해주세요",
+                          required: true,
                         })}
                         className="adrressInput"
                         placeholder="주소"
+                        value={address.address}
                       />
                       <ErrorMessage>{errors?.address?.message}</ErrorMessage>
                     </li>
