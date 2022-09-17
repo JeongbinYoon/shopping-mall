@@ -113,22 +113,22 @@ function Login() {
   // 로그인 버튼 클릭시 input값 전달
   const { register, handleSubmit, setValue } = useForm<ILogin>();
   const setToken = useSetRecoilState<any>(tokenState);
-  const handleValid = ({ email, password }: ILogin) => {
+  const handleValid = ({ username, password }: ILogin) => {
     mutate({
-      email,
+      username,
       password,
     });
-    setValue("email", "");
+    setValue("username", "");
     setValue("password", "");
   };
 
   const navigate = useNavigate();
 
   if (isSuccess) {
-    const token = Object.values(data)[0];
+    const token = data;
     setToken(token);
     navigate("/");
-    localStorage.setItem("token", token);
+    token && localStorage.setItem("token", token);
     console.log(localStorage.getItem("token"));
   }
 
@@ -140,7 +140,7 @@ function Login() {
         <Form onSubmit={handleSubmit(handleValid)}>
           <Area>
             <Input
-              {...register("email", { required: "아이디를 입력하세요" })}
+              {...register("username", { required: "아이디를 입력하세요" })}
               type="id"
               placeholder="아이디"
             />

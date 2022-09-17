@@ -685,13 +685,13 @@ export const reviewState = atom<IReview[]>({
 
 // 로그인
 export interface ILogin {
-  email: string;
-  // username: string;
+  // email: string;
+  username: string;
   password: string;
 }
 export const loginState = atom<ILogin>({
   key: "login",
-  default: { email: "", password: "null" },
+  default: { username: "", password: "null" },
 });
 
 // 토큰
@@ -705,14 +705,14 @@ export const tokenState = atom<IToken>({
 
 // 회원가입
 export interface IJoin {
-  email: string;
+  username: string;
   // username: string;
   password: string;
   role: string;
 }
 export const joinState = atom<IJoin>({
   key: "join",
-  default: { email: "", password: "null", role: "ROLE_USER" },
+  default: { username: "", password: "null", role: "ROLE_USER" },
 });
 
 // 주문결제 주소검색
