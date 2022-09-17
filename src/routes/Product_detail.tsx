@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -22,6 +22,7 @@ import Header from "../components/Header";
 import itemData from "../data/detail.json";
 import reviewData from "../review.json";
 import Reviews from "../components/Review";
+import { onCheckUser } from "../api";
 
 const Container = styled.div`
   display: flex;
@@ -80,6 +81,10 @@ const DetailArea = styled.div`
       font-size: 20px;
       span {
         display: block;
+      }
+      .price.line {
+        color: #ccc;
+        text-decoration: 1px solid line-through #ccc;
       }
     }
     .itemOption {
@@ -231,7 +236,7 @@ function Product_detail() {
 
   // 요청해서 받은 데이터
   const data = itemData;
-  const itemDetail = data.itemDetail;
+  const itemDetail = data;
   const itemReviews = reviewData.reviews;
   const setReviews = useSetRecoilState<IReview[]>(reviewState);
   useEffect(() => {
@@ -311,6 +316,22 @@ function Product_detail() {
   const likeBtnClick = (): any => {
     setIsLiked((current) => !current);
   };
+
+  // 구매하기 클릭
+  const navigate = useNavigate();
+  const onPurchase = () => {
+    console.log(localStorage.token);
+    if (localStorage.token) {
+      const response = onCheckUser(localStorage.token);
+      navigate("/order", { state: response });
+    } else {
+      alert("로그인이 필요합니다.");
+      navigate("/login");
+    }
+
+    alert("hi");
+  };
+
   return (
     <>
       <Header />
@@ -322,18 +343,26 @@ function Product_detail() {
           <div className="itemInfo">
             <h2 className="itemName">{itemDetail.name}</h2>
             <div className="itemPrice">
-              <span className="Price">
-                KRW {itemDetail.price.toLocaleString()}
-              </span>
-              {itemDetail.dcRate ? (
-                <span className="dcPrice">
-                  KRW{" "}
-                  {(
-                    itemDetail.price -
-                    Math.floor((itemDetail.price * itemDetail.dcRate) / 100)
-                  ).toLocaleString()}
+              {itemDetail.discountRate ? (
+                <>
+                  <span className="price line">
+                    KRW {itemDetail.price.toLocaleString()}
+                  </span>
+                  <span className="dcPrice">
+                    KRW{" "}
+                    {(
+                      itemDetail.price -
+                      Math.floor(
+                        (itemDetail.price * itemDetail.discountRate) / 100
+                      )
+                    ).toLocaleString()}
+                  </span>
+                </>
+              ) : (
+                <span className="price">
+                  KRW {itemDetail.price.toLocaleString()}
                 </span>
-              ) : null}
+              )}
             </div>
             <pre className="itemSummary">{itemDetail.summary}</pre>
 
@@ -342,18 +371,18 @@ function Product_detail() {
               <span>옵션</span>
               <div ref={itemColorOption} className="itemColor">
                 <span>색상</span>
-                {itemDetail.color.map((color) => (
-                  <div onClick={colorClick} key={color}>
-                    {color}
+                {itemDetail.productDetail.map((opt, idx) => (
+                  <div onClick={colorClick} key={idx}>
+                    {opt.color}
                   </div>
                 ))}
               </div>
 
               <div className="itemSize">
                 <span>사이즈</span>
-                {itemDetail.size.map((size) => (
-                  <div onClick={sizeClick} key={size}>
-                    {size}
+                {itemDetail.productDetail.map((opt, idx) => (
+                  <div onClick={sizeClick} key={idx}>
+                    {opt.size}
                   </div>
                 ))}
               </div>
@@ -368,12 +397,13 @@ function Product_detail() {
                       <div key={idx} data-idx={idx}>
                         <span>{`${el.color} / ${el.size}`}</span>
                         <div className="priceAndBtn">
-                          {itemDetail.dcRate ? (
+                          {itemDetail.discountRate ? (
                             <span className="price">
                               {(
                                 itemDetail.price -
                                 Math.floor(
-                                  (itemDetail.price * itemDetail.dcRate) / 100
+                                  (itemDetail.price * itemDetail.discountRate) /
+                                    100
                                 )
                               ).toLocaleString()}
                             </span>
@@ -393,14 +423,14 @@ function Product_detail() {
             <div className="itemTotal">
               total:{" "}
               <span className="priceResult">
-                {itemDetail.dcRate
+                {itemDetail.discountRate
                   ? (
                       selectedItem.filter(
                         (el: selectOption) => el.size !== null
                       ).length *
                       (itemDetail.price -
                         Math.floor(
-                          (itemDetail.price * itemDetail.dcRate) / 100
+                          (itemDetail.price * itemDetail.discountRate) / 100
                         ))
                     ).toLocaleString()
                   : (
@@ -432,9 +462,11 @@ function Product_detail() {
               <button onClick={addCart} className="cartBtn">
                 장바구니
               </button>
-              <Link to={`/order/prd=${productId}`} className="buyBtn">
+              {/* <Link to={`/order/prd=${productId}`} className="buyBtn"> */}
+              <button onClick={onPurchase} className="buyBtn">
                 구매하기
-              </Link>
+              </button>
+              {/* </Link> */}
             </div>
           </div>
         </DetailArea>

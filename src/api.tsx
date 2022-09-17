@@ -1,12 +1,11 @@
 import axios from "axios";
 import { IJoin, ILogin } from "./atoms";
 
-export const onLogin = async (userInfo: ILogin)=> {
+export const onLogin = async (userInfo: ILogin) => {
   let token;
-  await axios.post<string>(
-    `http://localhost:8080/login`,
-    userInfo
-  ).then(res=> token = res.headers.authorization);
+  await axios
+    .post<string>(`http://localhost:8080/login`, userInfo)
+    .then((res) => (token = res.headers.authorization));
   return token;
 };
 
@@ -16,4 +15,12 @@ export const onJoin = async (userInfo: IJoin): Promise<string> => {
     userInfo
   );
   return data;
+};
+
+// 회원 유무 체크
+export const onCheckUser = async (token: any) => {
+  const response = await axios //
+    .get<any>(`http://localhost:8080/check`, token);
+
+  return response;
 };

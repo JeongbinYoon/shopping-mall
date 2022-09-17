@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { useRecoilValue, useRecoilState } from "recoil";
 import { IAddress, addressState } from "../atoms";
 import Postcode from "../components/Postcode";
+import { useLocation } from "react-router-dom";
 
 const Container = styled.div`
   display: flex;
@@ -266,7 +267,11 @@ interface IForm {
 
 function Order() {
   // 주문 상품 데이터 요청
-  const orderData = data;
+  const location = useLocation();
+  let orderData: any;
+  useEffect(() => {
+    orderData = location.state.orderData;
+  });
 
   const {
     register,
