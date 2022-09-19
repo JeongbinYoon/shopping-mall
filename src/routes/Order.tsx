@@ -268,9 +268,9 @@ interface IForm {
 function Order() {
   // 주문 상품 데이터 요청
   const location = useLocation();
-  let orderData: any;
+  let orderData = data;
   useEffect(() => {
-    orderData = location.state.orderData;
+    // orderData = location.state.orderData;
   });
 
   const {

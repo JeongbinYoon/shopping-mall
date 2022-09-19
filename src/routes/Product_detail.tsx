@@ -22,7 +22,7 @@ import Header from "../components/Header";
 import itemData from "../data/detail.json";
 import reviewData from "../review.json";
 import Reviews from "../components/Review";
-import { onCheckUser } from "../api";
+import { onCheckUser, onLoadProduct } from "../api";
 
 const Container = styled.div`
   display: flex;
@@ -233,15 +233,36 @@ const SellerInfo = styled.div``;
 function Product_detail() {
   // 상품 번호 파라미터
   const { productId } = useParams();
-
+  console.log(productId);
   // 요청해서 받은 데이터
-  const data = itemData;
-  const itemDetail = data;
+  let itemDetail: any;
+  useEffect(() => {
+    itemDetail = onLoadProduct(productId);
+  }, []);
+  // 임시 데이터
+  // itemDetail = itemData.data;
   const itemReviews = reviewData.reviews;
   const setReviews = useSetRecoilState<IReview[]>(reviewState);
   useEffect(() => {
     setReviews(itemReviews);
   }, []);
+
+  // 옵션:색상 추가
+  const removeDup = (options: any, opt: any) => {
+    const arr: any = [];
+    if (opt === "color") {
+      options.map((option: any) => {
+        arr.push(option.color);
+      });
+    } else if (opt === "size") {
+      options.map((option: any) => {
+        arr.push(option.size);
+      });
+    }
+
+    console.log([...new Set(arr)]);
+    return [...new Set(arr)];
+  };
 
   // 옵션 선택
   const [selectedColor, setSelectedColor] =
@@ -336,168 +357,186 @@ function Product_detail() {
     <>
       <Header />
       <Container>
-        <DetailArea>
-          <div className="imgBox">
-            <img src={itemDetail.thumbnail} alt="대표이미지" />
-          </div>
-          <div className="itemInfo">
-            <h2 className="itemName">{itemDetail.name}</h2>
-            <div className="itemPrice">
-              {itemDetail.discountRate ? (
-                <>
-                  <span className="price line">
-                    KRW {itemDetail.price.toLocaleString()}
-                  </span>
-                  <span className="dcPrice">
-                    KRW{" "}
-                    {(
-                      itemDetail.price -
-                      Math.floor(
-                        (itemDetail.price * itemDetail.discountRate) / 100
-                      )
-                    ).toLocaleString()}
-                  </span>
-                </>
-              ) : (
-                <span className="price">
-                  KRW {itemDetail.price.toLocaleString()}
-                </span>
-              )}
-            </div>
-            <pre className="itemSummary">{itemDetail.summary}</pre>
-
-            {/* 옵션 */}
-            <div className="itemOption">
-              <span>옵션</span>
-              <div ref={itemColorOption} className="itemColor">
-                <span>색상</span>
-                {itemDetail.productDetail.map((opt, idx) => (
-                  <div onClick={colorClick} key={idx}>
-                    {opt.color}
-                  </div>
-                ))}
+        {itemDetail && (
+          <>
+            <DetailArea>
+              <div className="imgBox">
+                {/* <img src={itemDetail.thumbnail} alt="대표이미지" /> */}
               </div>
-
-              <div className="itemSize">
-                <span>사이즈</span>
-                {itemDetail.productDetail.map((opt, idx) => (
-                  <div onClick={sizeClick} key={idx}>
-                    {opt.size}
-                  </div>
-                ))}
-              </div>
-
-              {/* 추가한 옵션 */}
-              {selectedItem.filter((el: selectOption) => el.size !== null)
-                .length > 0 ? (
-                <div className="selected">
-                  {selectedItem
-                    .filter((el: selectOption) => el.size !== null)
-                    .map((el, idx) => (
-                      <div key={idx} data-idx={idx}>
-                        <span>{`${el.color} / ${el.size}`}</span>
-                        <div className="priceAndBtn">
-                          {itemDetail.discountRate ? (
-                            <span className="price">
-                              {(
-                                itemDetail.price -
-                                Math.floor(
-                                  (itemDetail.price * itemDetail.discountRate) /
-                                    100
-                                )
-                              ).toLocaleString()}
-                            </span>
-                          ) : (
-                            <span>{itemDetail.price}</span>
-                          )}
-                          <button className="minusBtn" onClick={deleteOption}>
-                            <FontAwesomeIcon icon={faCircleXmark} />
-                          </button>
-                        </div>
-                      </div>
-                    ))}
+              <div className="itemInfo">
+                <h2 className="itemName">{itemDetail.name}</h2>
+                <div className="itemPrice">
+                  {itemDetail.discountRate ? (
+                    <>
+                      <span className="price line">
+                        KRW {itemDetail.price.toLocaleString()}
+                      </span>
+                      <span className="dcPrice">
+                        KRW{" "}
+                        {(
+                          itemDetail.price -
+                          Math.floor(
+                            (itemDetail.price * itemDetail.discountRate) / 100
+                          )
+                        ).toLocaleString()}
+                      </span>
+                    </>
+                  ) : (
+                    <span className="price">
+                      KRW {itemDetail.price.toLocaleString()}
+                    </span>
+                  )}
                 </div>
-              ) : null}
-            </div>
+                <pre className="itemSummary">{itemDetail.summary}</pre>
 
-            <div className="itemTotal">
-              total:{" "}
-              <span className="priceResult">
-                {itemDetail.discountRate
-                  ? (
-                      selectedItem.filter(
-                        (el: selectOption) => el.size !== null
-                      ).length *
-                      (itemDetail.price -
-                        Math.floor(
-                          (itemDetail.price * itemDetail.discountRate) / 100
-                        ))
-                    ).toLocaleString()
-                  : (
-                      selectedItem.filter(
-                        (el: selectOption) => el.size !== null
-                      ).length * itemDetail.price
-                    ).toLocaleString()}
-                <span className="KRW">원</span>{" "}
-              </span>
-              (
-              {
-                selectedItem.filter((el: selectOption) => el.size !== null)
-                  .length
-              }
-              개)
-            </div>
+                {/* 옵션 */}
+                <div className="itemOption">
+                  <span>옵션</span>
+                  <div ref={itemColorOption} className="itemColor">
+                    <span>색상</span>
+                    <>
+                      {removeDup(itemDetail.productOption, "color").map(
+                        (opt: any, idx) => (
+                          <div onClick={colorClick} key={idx}>
+                            {opt}
+                          </div>
+                        )
+                      )}
+                    </>
+                  </div>
 
-            <div className="itemButtons">
-              {isLiked ? (
-                <button onClick={likeBtnClick} className="likeBtn active">
-                  <FontAwesomeIcon icon={faSolidHeart} />
-                </button>
-              ) : (
-                <button onClick={likeBtnClick} className="likeBtn">
-                  <FontAwesomeIcon icon={faHeart} />
-                </button>
+                  <div className="itemSize">
+                    <span>사이즈</span>
+                    <>
+                      {removeDup(itemDetail.productOption, "size").map(
+                        (opt: any, idx) => (
+                          <div onClick={sizeClick} key={idx}>
+                            {opt}
+                          </div>
+                        )
+                      )}
+                    </>
+                  </div>
+
+                  {/* 추가한 옵션 */}
+                  {selectedItem.filter((el: selectOption) => el.size !== null)
+                    .length > 0 ? (
+                    <div className="selected">
+                      {selectedItem
+                        .filter((el: selectOption) => el.size !== null)
+                        .map((el, idx) => (
+                          <div key={idx} data-idx={idx}>
+                            <span>{`${el.color} / ${el.size}`}</span>
+                            <div className="priceAndBtn">
+                              {itemDetail.discountRate ? (
+                                <span className="price">
+                                  {(
+                                    itemDetail.price -
+                                    Math.floor(
+                                      (itemDetail.price *
+                                        itemDetail.discountRate) /
+                                        100
+                                    )
+                                  ).toLocaleString()}
+                                </span>
+                              ) : (
+                                <span>{itemDetail.price}</span>
+                              )}
+                              <button
+                                className="minusBtn"
+                                onClick={deleteOption}
+                              >
+                                <FontAwesomeIcon icon={faCircleXmark} />
+                              </button>
+                            </div>
+                          </div>
+                        ))}
+                    </div>
+                  ) : null}
+                </div>
+
+                <div className="itemTotal">
+                  total:{" "}
+                  <span className="priceResult">
+                    {itemDetail.discountRate
+                      ? (
+                          selectedItem.filter(
+                            (el: selectOption) => el.size !== null
+                          ).length *
+                          (itemDetail.price -
+                            Math.floor(
+                              (itemDetail.price * itemDetail.discountRate) / 100
+                            ))
+                        ).toLocaleString()
+                      : (
+                          selectedItem.filter(
+                            (el: selectOption) => el.size !== null
+                          ).length * itemDetail.price
+                        ).toLocaleString()}
+                    <span className="KRW">원</span>{" "}
+                  </span>
+                  (
+                  {
+                    selectedItem.filter((el: selectOption) => el.size !== null)
+                      .length
+                  }
+                  개)
+                </div>
+
+                <div className="itemButtons">
+                  {isLiked ? (
+                    <button onClick={likeBtnClick} className="likeBtn active">
+                      <FontAwesomeIcon icon={faSolidHeart} />
+                    </button>
+                  ) : (
+                    <button onClick={likeBtnClick} className="likeBtn">
+                      <FontAwesomeIcon icon={faHeart} />
+                    </button>
+                  )}
+
+                  <button onClick={addCart} className="cartBtn">
+                    장바구니
+                  </button>
+                  {/* <Link to={`/order/prd=${productId}`} className="buyBtn"> */}
+                  <button onClick={onPurchase} className="buyBtn">
+                    구매하기
+                  </button>
+                  {/* </Link> */}
+                </div>
+              </div>
+            </DetailArea>
+            <PrdDetail>
+              <PrdTab>
+                <li onClick={tabClick} className="prdInfo active">
+                  상세정보
+                </li>
+                <li onClick={tabClick} className="review ">
+                  리뷰
+                </li>
+                <li onClick={tabClick} className="qna ">
+                  상품 Q&amp;A
+                </li>
+                <li onClick={tabClick} className="sellerInfo ">
+                  판매자정보
+                </li>
+              </PrdTab>
+              {tabInfo.tab === "상세정보" && (
+                <PrdInfo>
+                  {/* {itemDetail.detailImg.map((url) => ( */}
+                  {/* <img key={url} src={url} alt="상세이미지" /> */}
+                  {/* ))} */}
+                </PrdInfo>
               )}
 
-              <button onClick={addCart} className="cartBtn">
-                장바구니
-              </button>
-              {/* <Link to={`/order/prd=${productId}`} className="buyBtn"> */}
-              <button onClick={onPurchase} className="buyBtn">
-                구매하기
-              </button>
-              {/* </Link> */}
-            </div>
-          </div>
-        </DetailArea>
-        <PrdDetail>
-          <PrdTab>
-            <li onClick={tabClick} className="prdInfo active">
-              상세정보
-            </li>
-            <li onClick={tabClick} className="review ">
-              리뷰
-            </li>
-            <li onClick={tabClick} className="qna ">
-              상품 Q&amp;A
-            </li>
-            <li onClick={tabClick} className="sellerInfo ">
-              판매자정보
-            </li>
-          </PrdTab>
-          {tabInfo.tab === "상세정보" && (
-            <PrdInfo>
-              {itemDetail.detailImg.map((url) => (
-                <img key={url} src={url} alt="상세이미지" />
-              ))}
-            </PrdInfo>
-          )}
+              {tabInfo.tab === "리뷰" && <Reviews />}
 
-          {tabInfo.tab === "리뷰" && <Reviews />}
-
-          {tabInfo.tab === "상품 Q&A" && <QnA>상품 Q&amp;A</QnA>}
-          {tabInfo.tab === "판매자정보" && <SellerInfo>판매자정보</SellerInfo>}
-        </PrdDetail>
+              {tabInfo.tab === "상품 Q&A" && <QnA>상품 Q&amp;A</QnA>}
+              {tabInfo.tab === "판매자정보" && (
+                <SellerInfo>판매자정보</SellerInfo>
+              )}
+            </PrdDetail>
+          </>
+        )}
       </Container>
     </>
   );

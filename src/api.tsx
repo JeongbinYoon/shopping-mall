@@ -24,3 +24,11 @@ export const onCheckUser = async (token: any) => {
 
   return response;
 };
+
+// 상품정보 불러오기
+export const onLoadProduct = async (productId: any) => {
+  const { data } = await axios.get(
+    "http://localhost:8080/product?id=1",
+    productId
+  );
+};
