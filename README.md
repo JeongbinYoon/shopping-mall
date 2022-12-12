@@ -82,3 +82,9 @@ api 요청하는 파일을 따로 관리하여 필요한 경우 import 후 사�
 <img src="https://user-images.githubusercontent.com/86540140/207033832-5b2f295c-da09-43e3-b204-40c11508363b.jpeg" width="760"><br/>
 
 
+<br/>
+<br/>
+
+> ### 마이페이지
+<img src="https://user-images.githubusercontent.com/86540140/207046259-86889714-3f50-4c92-bd45-891424fccfe2.jpeg" width="760"><br/>
+<br/>
